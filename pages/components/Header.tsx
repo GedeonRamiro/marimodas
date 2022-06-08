@@ -12,7 +12,7 @@ const Header = ({ children }: Props) => {
         { href: '/', pathname: '/', name: 'Home' },
         { href: '/feminino', pathname: '/feminino', name: 'Feminino' },
         { href: '/masculino', pathname: '/masculino', name: 'Masculino' },
-        { href: '/acessorios', pathname: '/acessorios', name: 'Acessórios' },
+        { href: '/outrosprodutos', pathname: '/outrosprodutos', name: 'Outros Produtos' },
         { href: '/tupperware', pathname: '/tupperware', name: 'Tupperware' },
         { href: '/sobre', pathname: '/sobre', name: 'Quem somos?' },
     ];
@@ -48,20 +48,20 @@ const Header = ({ children }: Props) => {
                                     <Image src={Logo} alt='Logo' width={30} height={30} />
                                 </Link>
                             </div>
-                            <div className='flex-none hidden lg:block'>
+                            <nav className='flex-none hidden lg:block'>
                                 <ul className='menu menu-horizontal font-normal text-gray-600'>
                                     {/*   <!-- Navbar menu content here --> */}
                                     {menuArray.map((menu) => (
                                         <li>
                                             <Link href={menu.href}>
-                                                <a className='btn btn-link font-medium capitalize'>
+                                                <a className='btn btn-link no-animation font-medium capitalize'>
                                                     {menu.name}
                                                 </a>
                                             </Link>
                                         </li>
                                     ))}
                                 </ul>
-                            </div>
+                            </nav>
                         </div>
                     </div>
                     {/*  <!-- Page content here --> */}
@@ -73,18 +73,20 @@ const Header = ({ children }: Props) => {
                 </div>
             </div>
 
-            <div className='drawer-side'>
+            <nav className='drawer-side'>
                 <label htmlFor='my-drawer-3' className='drawer-overlay'></label>
                 <ul className='menu p-4 overflow-y-auto w-80 bg-base-100 text-sm'>
                     {menuArray.map((menu) => (
                         <li>
                             <Link href={menu.href}>
-                                <a className='btn btn-link font-medium capitalize'>{menu.name}</a>
+                                <a className='btn btn-link no-animation font-medium capitalize'>
+                                    {menu.name}
+                                </a>
                             </Link>
                         </li>
                     ))}
                 </ul>
-            </div>
+            </nav>
         </div>
     );
 };
