@@ -395,6 +395,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         const responsePost = await client.getByUID('feminino', String(slug), {});
 
         //const product = ProductsMapper(responsePost);
+        //const product = ProductsMapper(responsePost);
 
         return {
             props: {
