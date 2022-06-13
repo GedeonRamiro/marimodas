@@ -34,9 +34,9 @@ const Header = ({ children }: Props) => {
                                     className='inline-block w-6 h-6 stroke-current'
                                 >
                                     <path
-                                        stroke-linecap='round'
-                                        stroke-linejoin='round'
-                                        stroke-width='2'
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        strokeWidth='2'
                                         d='M4 6h16M4 12h16M4 18h16'
                                     ></path>
                                 </svg>
@@ -51,8 +51,8 @@ const Header = ({ children }: Props) => {
                             <nav className='flex-none hidden lg:block'>
                                 <ul className='menu menu-horizontal font-normal text-gray-600'>
                                     {/*   <!-- Navbar menu content here --> */}
-                                    {menuArray.map((menu) => (
-                                        <li>
+                                    {menuArray.map((menu, index) => (
+                                        <li key={index}>
                                             <Link href={menu.href}>
                                                 <a className='btn btn-link no-animation font-medium capitalize'>
                                                     {menu.name}
@@ -76,8 +76,8 @@ const Header = ({ children }: Props) => {
             <nav className='drawer-side'>
                 <label htmlFor='my-drawer-3' className='drawer-overlay'></label>
                 <ul className='menu p-4 overflow-y-auto w-80 bg-base-100 text-sm'>
-                    {menuArray.map((menu) => (
-                        <li>
+                    {menuArray.map((menu, index) => (
+                        <li key={index}>
                             <Link href={menu.href}>
                                 <a className='btn btn-link no-animation font-medium capitalize'>
                                     {menu.name}

@@ -33,8 +33,8 @@ const Footer = () => {
             <div>
                 <span className='footer-title'>Categorias</span>
 
-                {menuArray.map((menu) => (
-                    <Link href={menu.href}>
+                {menuArray.map((menu, index) => (
+                    <Link href={menu.href} key={index}>
                         <a className='link link-hover'>{menu.name}</a>
                     </Link>
                 ))}
