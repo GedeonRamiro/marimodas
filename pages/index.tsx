@@ -1,165 +1,161 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
+import * as prismic from '@prismicio/client';
+import { client } from '../utils/prismic-configuration';
 import Header from './components/Header';
-import { Slide } from 'react-slideshow-image';
-import Banner03 from '../public/images/banner03.jpg';
 import BannerFeminino from '../public/images/banner-feminino.jpg';
 import BannerMasculino from '../public/images/banner-masculino.jpg';
 import BannerAcessorios from '../public/images/banner-acessorios.jpg';
-import BannerPerfume from '../public/images/banner-perfume.jpeg';
-import BannerTupperware from '../public/images/banner-tupperware.jpg';
 import { GiHanger } from 'react-icons/gi';
 import { FaMoneyCheck } from 'react-icons/fa';
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import Image from 'next/image';
 import Slider from 'react-slick';
+import SlideBannerMain from './components/SlideBannerMain';
+import TestimonialClient from './components/TestimonialClient';
+import Blockquote from './components/Blockquote';
+import Link from 'next/link';
+import { ProductsMapper } from '../utils/mappers';
+import formatCurrent from '../utils/formatCurrent';
 
-const Home: NextPage = () => {
-    const settings = {
-        infinite: true,
-        speed: 500,
-        dots: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        arrows: false,
-    };
+interface BannerEmphasis {
+    id: string;
+    title: string;
+    image: string;
+    link: string;
+}
 
+interface bannerNews extends BannerEmphasis {
+    description: string;
+}
+
+interface bannerPromotion extends BannerEmphasis {
+    price: number;
+}
+
+interface Products {
+    id: string;
+    slug: string;
+    image: [{ image1: { url: string } }];
+    name: string;
+    description: string;
+    price: number;
+}
+
+interface ProductsSize extends Products {
+    sizeP: boolean;
+    sizeM: boolean;
+    sizeG: boolean;
+}
+
+interface ProductsSizeSingle extends Products {
+    available: boolean;
+}
+
+type SlideBanner = {
+    id: string;
+    title: string;
+    description: string;
+    url: string;
+};
+
+type TestimonialClient = {
+    id: string;
+    name: string;
+    testimonial: string;
+    image: string;
+    date: string;
+};
+
+type Props = {
+    slideBanner: SlideBanner[];
+    testimonialClient: TestimonialClient[];
+    bannerNews: bannerNews;
+    bannerPromotion: bannerPromotion;
+    feminine: ProductsSize[];
+    masculine: ProductsSize[];
+    tupperware: ProductsSizeSingle[];
+    others: ProductsSizeSingle[];
+};
+
+const Home: NextPage<Props> = ({
+    slideBanner,
+    testimonialClient,
+    bannerPromotion,
+    bannerNews,
+    feminine,
+    masculine,
+    tupperware,
+    others,
+}) => {
     const settingsProduct = {
         infinite: true,
-        speed: 500,
+        speed: 1000,
         dots: true,
         slidesToShow: 2,
         slidesToScroll: 2,
         autoplay: true,
         autoplaySpeed: 4000,
         arrows: false,
-    };
-
-    const settings2 = {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        initialSlide: 0,
-        arrows: false,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    infinite: true,
-                    dots: true,
-                },
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    initialSlide: 1,
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
+        cssEase: 'linear',
     };
 
     return (
         <>
             <Header>
-                {/*  SLIDE */}
-                <div className='flex gap-4 sm:my-10'>
-                    <div className='text-center w-full lg:w-1/2'>
-                        <Slider {...settings}>
-                            <div className='relative'>
-                                <div className=' flex justify-center items-center '>
-                                    <div className='absolute z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3 font-semibold rounded '>
-                                        <h4 className='uppercase text-gray-500 text-[10px] sm:text-sm'>
-                                            Banner
-                                        </h4>
-                                        <p className='uppercase text-xs sm:text-lg'>
-                                            Your title banner
+                {/*  SLIDEMAIN */}
+                <section>
+                    <div className='flex gap-4 sm:my-10'>
+                        <div className='text-center w-full lg:w-1/2'>
+                            <SlideBannerMain slide={slideBanner} />
+                        </div>
+                        <div className='lg:flex lg:flex-col hidden gap-4 lg:w-1/2'>
+                            <div className='flex gap-4'>
+                                <Link href='/feminino'>
+                                    <div className='relative flex  justify-center items-center cursor-pointer'>
+                                        <p className='bg-white px-6 tracking-wider py-3 text-sm font-semibold rounded absolute z-50'>
+                                            FEMININO
                                         </p>
+                                        <Image
+                                            src={BannerFeminino}
+                                            width={400}
+                                            height={250}
+                                            objectFit='cover'
+                                            alt='BannerFeminino'
+                                        />
                                     </div>
+                                </Link>
+                                <Link href='/masculino'>
+                                    <div className='relative flex  justify-center items-center cursor-pointer'>
+                                        <p className='bg-white px-6 tracking-wider py-3 text-sm font-semibold rounded absolute z-50'>
+                                            MASCULINO
+                                        </p>
+                                        <Image
+                                            src={BannerMasculino}
+                                            width={400}
+                                            height={250}
+                                            objectFit='cover'
+                                            alt='BannerMasculino'
+                                        />
+                                    </div>
+                                </Link>
+                            </div>
+                            <Link href='/outrosprodutos'>
+                                <div className='relative flex  justify-center items-center cursor-pointer'>
+                                    <p className='bg-white px-6 tracking-wider py-3 text-sm font-semibold rounded absolute z-50'>
+                                        OUTROS PRODUTOS
+                                    </p>
                                     <Image
-                                        src={BannerFeminino}
+                                        src={BannerAcessorios}
                                         width={800}
-                                        height={500}
+                                        height={250}
                                         objectFit='cover'
-                                        alt='Banner01'
+                                        alt='BannerAcessorios'
                                     />
                                 </div>
-                            </div>
-                            <div>
-                                <Image
-                                    src={BannerMasculino}
-                                    width={800}
-                                    height={500}
-                                    objectFit='cover'
-                                    alt='Banner02'
-                                />
-                            </div>
-                            <div>
-                                {' '}
-                                <Image
-                                    src={Banner03}
-                                    width={800}
-                                    height={500}
-                                    objectFit='cover'
-                                    alt='Banner03'
-                                />
-                            </div>
-                        </Slider>
-                    </div>
-                    <div className='lg:flex lg:flex-col hidden gap-4 lg:w-1/2'>
-                        <div className='flex gap-4'>
-                            <div className='relative flex  justify-center items-center '>
-                                <p className='bg-white px-6 tracking-wider py-3 text-sm font-semibold rounded absolute z-50'>
-                                    FEMININO
-                                </p>
-                                <Image
-                                    src={BannerFeminino}
-                                    width={400}
-                                    height={250}
-                                    objectFit='cover'
-                                    alt='Banner03'
-                                />
-                            </div>
-                            <div className='relative flex  justify-center items-center '>
-                                <p className='bg-white px-6 tracking-wider py-3 text-sm font-semibold rounded absolute z-50'>
-                                    MASCULINO
-                                </p>
-                                <Image
-                                    src={BannerMasculino}
-                                    width={400}
-                                    height={250}
-                                    objectFit='cover'
-                                    alt='Banner02'
-                                />
-                            </div>
-                        </div>
-                        <div className='relative flex  justify-center items-center '>
-                            <p className='bg-white px-6 tracking-wider py-3 text-sm font-semibold rounded absolute z-50'>
-                                OUTROS PRODUTOS
-                            </p>
-                            <Image
-                                src={BannerAcessorios}
-                                width={800}
-                                height={250}
-                                objectFit='cover'
-                                alt='Banner02'
-                            />
+                            </Link>
                         </div>
                     </div>
-                </div>
+                </section>
 
                 {/* TEXTO ABAIXO DO SLIDE */}
                 <section>
@@ -189,844 +185,288 @@ const Home: NextPage = () => {
                 </section>
 
                 {/* CARD PRODUTOS FEMININOS */}
-
                 <section>
-                    <blockquote className='flex text-lg sm:text-2xl mt-14 mb-4 font-semibold italic text-center text-slate-900 sm:mx-0 mx-4'>
-                        <p className='mr-2'>Moda</p>
-                        <p className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-yellow-500 relative inline-block'>
-                            <span className='relative text-gray-100'>FEMININA</span>
-                        </p>
-                    </blockquote>
+                    <Blockquote text={'Moda'} textAction={'FEMININA'} />
 
                     {/* CARD PRODUTOS FEMININOS com slide */}
 
                     <Slider {...settingsProduct} className='sm:hidden'>
-                        <div className='p-2'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-2'>
-                                Vestido-Short com detalhes Vestido-Short com detalhes Vestido-Short
-                                com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div className='p-2'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div className='p-2'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div className='p-2'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div className='p-2'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div className='p-2'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div className='p-2'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div className='p-2'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
+                        {feminine &&
+                            feminine.map((productFeminine) => (
+                                <Link href={`/feminino/${productFeminine.slug}`}>
+                                    <div className='p-2' key={productFeminine.id}>
+                                        <Image
+                                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                            src={productFeminine.image[0].image1.url}
+                                            width={480}
+                                            height={600}
+                                            objectFit='cover'
+                                            alt={productFeminine.name}
+                                        />
+                                        <h4 className='text-gray-500 text-sm mt-2'>
+                                            {productFeminine.name}
+                                        </h4>
+                                        <p className='text-gray-800 font-bold'>
+                                            {formatCurrent(productFeminine.price)}
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
                     </Slider>
 
                     {/* CARD PRODUTOS FEMININOS sem slide */}
-                    <div className='hidden sm:grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 italic lg:grid-cols-4 my-6 mx-4 sm:mx-0'>
-                        <div className='mb-6'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-2'>
-                                Vestido-Short com detalhes Vestido-Short com detalhes Vestido-Short
-                                com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div className='mb-6'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerFeminino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Vestido-Short com detalhes
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                        </div>
+                    <div className='hidden sm:grid gap-4 sm:gap-6 grid-cols-3 md:grid-cols-4 italic lg:grid-cols-5 my-6 mx-4 sm:mx-0'>
+                        {feminine &&
+                            feminine.map((productFeminine) => (
+                                <Link href={`/feminino/${productFeminine.slug}`}>
+                                    <div className='mb-6' key={productFeminine.id}>
+                                        <Image
+                                            className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
+                                            src={productFeminine.image[0].image1.url}
+                                            width={480}
+                                            height={600}
+                                            objectFit='cover'
+                                            alt={productFeminine.name}
+                                        />
+                                        <h4 className='text-gray-500 text-sm mt-2'>
+                                            {productFeminine.name}
+                                        </h4>
+                                        <p className='text-gray-800 font-bold'>
+                                            {formatCurrent(productFeminine.price)}
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
                     </div>
-                    <h4 className='tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
-                        VER TUDO
-                    </h4>
+                    <Link href='/feminino'>
+                        <h4 className='cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
+                            VER TUDO
+                        </h4>
+                    </Link>
                 </section>
 
                 {/* CARD PRODUTOS MASCULINOS */}
-
                 <section>
-                    <blockquote className='flex text-lg sm:text-2xl mt-14 font-semibold italic text-center text-slate-900 sm:mx-0 mx-4'>
-                        <p className='mr-2'>Moda</p>
-                        <p className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-yellow-500 relative inline-block'>
-                            <span className='relative text-gray-100'>MASCULINA</span>
-                        </p>
-                    </blockquote>
+                    <Blockquote text={'Moda'} textAction={'MASCULINA'} />
 
-                    <div className='grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 italic lg:grid-cols-4 my-6 mx-4 sm:mx-0'>
-                        <div className='mb-6'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerMasculino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-2'>
-                                Camisa Básica Masculina Manga Camisa Básica Masculina Manga Camisa
-                                Básica Masculina Manga
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 25,30</p>
-                        </div>
-                        <div className='mb-6'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerMasculino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Camisa Básica Masculina Manga
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 25,30</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerMasculino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Camisa Básica Masculina Manga
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 25,30</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerMasculino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Camisa Básica Masculina Manga
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 25,30</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerMasculino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Camisa Básica Masculina Manga
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 25,30</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerMasculino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Camisa Básica Masculina Manga
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 25,30</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerMasculino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Camisa Básica Masculina Manga
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 25,30</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerMasculino}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Camisa Básica Masculina Manga
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 25,30</p>
-                        </div>
+                    <Slider {...settingsProduct} className='sm:hidden'>
+                        {masculine &&
+                            masculine.map((productMasculine) => (
+                                <div className='p-2' key={productMasculine.id}>
+                                    <Image
+                                        className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                        src={productMasculine.image[0].image1.url}
+                                        width={480}
+                                        height={600}
+                                        objectFit='cover'
+                                        alt={productMasculine.name}
+                                    />
+                                    <h4 className='text-gray-500 text-sm mt-2'>
+                                        {productMasculine.name}
+                                    </h4>
+                                    <p className='text-gray-800 font-bold'>
+                                        {formatCurrent(productMasculine.price)}
+                                    </p>
+                                </div>
+                            ))}
+                    </Slider>
+
+                    <div className='hidden sm:grid gap-4 sm:gap-6 grid-cols-3 md:grid-cols-4 italic lg:grid-cols-5 my-6 mx-4 sm:mx-0'>
+                        {masculine &&
+                            masculine.map((productMasculine) => (
+                                <div className='mb-6' key={productMasculine.id}>
+                                    <Image
+                                        className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
+                                        src={productMasculine.image[0].image1.url}
+                                        width={480}
+                                        height={600}
+                                        objectFit='cover'
+                                        alt={productMasculine.name}
+                                    />
+                                    <h4 className='text-gray-500 text-sm mt-2'>
+                                        {productMasculine.name}
+                                    </h4>
+                                    <p className='text-gray-800 font-bold'>
+                                        {formatCurrent(productMasculine.price)}
+                                    </p>
+                                </div>
+                            ))}
                     </div>
-                    <h4 className='tracking-wider p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
-                        VER TUDO
-                    </h4>
+                    <Link href='/masculino'>
+                        <h4 className='cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
+                            VER TUDO
+                        </h4>
+                    </Link>
                 </section>
 
                 {/* CARD PRODUTOS ACESSORIOS */}
-
                 <section>
-                    <blockquote className='flex text-lg sm:text-2xl mt-14 font-semibold italic text-center text-slate-900 sm:mx-0 mx-4'>
-                        <p className='mr-2'>Outros</p>
-                        <p className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-yellow-500 relative inline-block'>
-                            <span className='relative text-gray-100'>PRODUTOS</span>
-                        </p>
-                    </blockquote>
+                    <Blockquote text={'Outros'} textAction={'Produtos'} />
 
-                    <div className='grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 italic lg:grid-cols-4 my-6 mx-4 sm:mx-0'>
-                        <div className='mb-6'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerPerfume}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-2'>
-                                Perfume Natura Meu Primeiro Humor Perfume Natura Meu Primeiro Humor
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div className='mb-6'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerPerfume}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerPerfume}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerPerfume}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerPerfume}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerPerfume}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerPerfume}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerPerfume}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
+                    <Slider {...settingsProduct} className='sm:hidden'>
+                        {others &&
+                            others.map((productOthers) => (
+                                <div className='p-2' key={productOthers.id}>
+                                    <Image
+                                        className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                        src={productOthers.image[0].image1.url}
+                                        width={480}
+                                        height={600}
+                                        objectFit='cover'
+                                        alt={productOthers.name}
+                                    />
+                                    <h4 className='text-gray-500 text-sm mt-2'>
+                                        {productOthers.name}
+                                    </h4>
+                                    <p className='text-gray-800 font-bold'>
+                                        {formatCurrent(productOthers.price)}
+                                    </p>
+                                </div>
+                            ))}
+                    </Slider>
+
+                    <div className='hidden sm:grid gap-4 sm:gap-6 grid-cols-3 md:grid-cols-4 italic lg:grid-cols-5 my-6 mx-4 sm:mx-0'>
+                        {others &&
+                            others.map((productOthers) => (
+                                <div className='mb-6' key={productOthers.id}>
+                                    <Image
+                                        className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
+                                        src={productOthers.image[0].image1.url}
+                                        width={480}
+                                        height={600}
+                                        objectFit='cover'
+                                        alt={productOthers.name}
+                                    />
+                                    <h4 className='text-gray-500 text-sm mt-2'>
+                                        {productOthers.name}
+                                    </h4>
+                                    <p className='text-gray-800 font-bold'>
+                                        {formatCurrent(productOthers.price)}
+                                    </p>
+                                </div>
+                            ))}
                     </div>
-                    <h4 className='tracking-wider p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
-                        VER TUDO
-                    </h4>
+                    <Link href='/outrosprodutos'>
+                        <h4 className='cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
+                            VER TUDO
+                        </h4>
+                    </Link>
                 </section>
 
                 {/* CARD PRODUTOS Tupperware */}
-
                 <section>
-                    <blockquote className='flex text-lg sm:text-2xl mt-14 font-semibold italic text-center text-slate-900 sm:mx-0 mx-4'>
-                        <p className='mr-2'>Temos</p>
-                        <p className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-yellow-500 relative inline-block'>
-                            <span className='relative text-gray-100'>Tupperware</span>
-                        </p>
-                    </blockquote>
+                    <Blockquote text={'Temos'} textAction={'Tupperware'} />
 
-                    <div className='grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 italic lg:grid-cols-4 my-6 mx-4 sm:mx-0'>
-                        <div className='mb-6'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerTupperware}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-2'>
-                                Perfume Natura Meu Primeiro Humor Perfume Natura Meu Primeiro Humor
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div className='mb-6'>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerTupperware}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerTupperware}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerTupperware}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerTupperware}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerTupperware}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerTupperware}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
-                        <div>
-                            <Image
-                                className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                src={BannerTupperware}
-                                width={480}
-                                height={600}
-                                objectFit='cover'
-                                alt='Banner03'
-                            />
-                            <h4 className='text-gray-500 text-sm mt-4'>
-                                Perfume Natura Meu Primeiro Humor
-                            </h4>
-                            <p className='text-gray-800 font-bold'>R$ 112,80</p>
-                        </div>
+                    <Slider {...settingsProduct} className='sm:hidden'>
+                        {tupperware &&
+                            tupperware.map((productTupperware) => (
+                                <div className='p-2' key={productTupperware.id}>
+                                    <Image
+                                        className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                        src={productTupperware.image[0].image1.url}
+                                        width={480}
+                                        height={600}
+                                        objectFit='cover'
+                                        alt={productTupperware.name}
+                                    />
+                                    <h4 className='text-gray-500 text-sm mt-2'>
+                                        {productTupperware.name}
+                                    </h4>
+                                    <p className='text-gray-800 font-bold'>
+                                        {formatCurrent(productTupperware.price)}
+                                    </p>
+                                </div>
+                            ))}
+                    </Slider>
+
+                    <div className='hidden sm:grid gap-4 sm:gap-6 grid-cols-3 md:grid-cols-4 italic lg:grid-cols-5 my-6 mx-4 sm:mx-0'>
+                        {tupperware &&
+                            tupperware.map((productTupperware) => (
+                                <div className='mb-6' key={productTupperware.id}>
+                                    <Image
+                                        className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
+                                        src={productTupperware.image[0].image1.url}
+                                        width={480}
+                                        height={600}
+                                        objectFit='cover'
+                                        alt={productTupperware.name}
+                                    />
+                                    <h4 className='text-gray-500 text-sm mt-2'>
+                                        {productTupperware.name}
+                                    </h4>
+                                    <p className='text-gray-800 font-bold'>
+                                        {formatCurrent(productTupperware.price)}
+                                    </p>
+                                </div>
+                            ))}
                     </div>
-                    <h4 className='tracking-wider p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
-                        VER TUDO
-                    </h4>
+
+                    <Link href='/feminino'>
+                        <h4 className='cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
+                            VER TUDO
+                        </h4>
+                    </Link>
                 </section>
 
                 {/* CARD PRODUTOS DESTAQUE */}
                 <section>
-                    <div className='sm:flex gap-6 justify-center my-4'>
-                        <div className='relative'>
-                            <div className='flex justify-center items-center '>
-                                <div className='absolute text-center z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3  font-semibold rounded '>
-                                    <h4 className='uppercase text-gray-500 text-[10px] sm:text-[12px]'>
-                                        Chegou novidade
-                                    </h4>
-                                    <p className='uppercase text-xs sm:text-base'>
-                                        Vestido-Short com detalhes
-                                    </p>
+                    <div className='sm:flex gap-6 justify-center my-10 sm:my-20'>
+                        <Link href={bannerNews.link}>
+                            <div className='relative cursor-pointer'>
+                                <div className='flex justify-center items-center '>
+                                    <div className='absolute text-center z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3  font-semibold rounded '>
+                                        <h4 className='uppercase text-gray-500 text-[10px] sm:text-[12px]'>
+                                            {bannerNews.title}
+                                        </h4>
+                                        <p className='uppercase text-xs sm:text-base'>
+                                            {bannerNews.description}
+                                        </p>
+                                    </div>
+                                    <Image
+                                        src={bannerNews.image}
+                                        width={800}
+                                        height={400}
+                                        objectFit='cover'
+                                        alt='Banner01'
+                                    />
                                 </div>
-                                <Image
-                                    src={BannerFeminino}
-                                    width={800}
-                                    height={400}
-                                    objectFit='cover'
-                                    alt='Banner01'
-                                />
                             </div>
-                        </div>
-                        <div className='relative'>
-                            <div className=' flex justify-center items-center '>
-                                <div className='absolute  text-center z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3  font-semibold rounded '>
-                                    <h4 className='uppercase text-gray-500 text-[10px] sm:text-[12px]'>
-                                        Promoção
-                                    </h4>
-                                    <p className='uppercase text-xs sm:text-base'>
-                                        por apenas <span className='text-red-500'>R$ 20,00</span>
-                                    </p>
+                        </Link>
+
+                        <Link href={bannerPromotion.link}>
+                            <div className='relative cursor-pointer'>
+                                <div className=' flex justify-center items-center '>
+                                    <div className='absolute  text-center z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3  font-semibold rounded '>
+                                        <h4 className='uppercase text-gray-500 text-[10px] sm:text-[12px]'>
+                                            {bannerPromotion.title}
+                                        </h4>
+                                        <p className='uppercase text-xs sm:text-base'>
+                                            por apenas{' '}
+                                            <span className='text-red-500'>
+                                                R$ {bannerPromotion.price}
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <Image
+                                        src={bannerPromotion.image}
+                                        width={800}
+                                        height={400}
+                                        objectFit='cover'
+                                        alt='Banner01'
+                                    />
                                 </div>
-                                <Image
-                                    src={BannerMasculino}
-                                    width={800}
-                                    height={400}
-                                    objectFit='cover'
-                                    alt='Banner01'
-                                />
                             </div>
-                        </div>
+                        </Link>
                     </div>
                 </section>
 
                 {/* CARD DEPOIMENTOS */}
                 <section>
-                    <div className='px-5 py-10 text-gray-600 body-font'>
-                        <blockquote className='flex justify-center text-lg py-10 font-semibold italic text-center text-slate-900 sm:mx-0 mx-4'>
-                            <p className='mr-2'>Depoimentos dos</p>
-                            <p className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-yellow-500 relative inline-block'>
-                                <span className='relative text-gray-100'>CLIENTES</span>
-                            </p>
-                        </blockquote>
-                        <Slider {...settings2}>
-                            <div className='h-full text-center px-0 sm:px-4'>
-                                <Image
-                                    width={80}
-                                    height={80}
-                                    alt='testimonial'
-                                    className='w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100'
-                                    src={BannerFeminino}
-                                />
-                                <p className='leading-relaxed text-sm'>
-                                    Edison bulb retro cloud bread echo park, helvetica stumptown
-                                    taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                                    ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                                    adaptogen squid fanny pack vaporware.
-                                </p>
-                                <span className='inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4'></span>
-                                <h2 className='text-gray-900 font-medium title-font tracking-wider text-sm'>
-                                    HOLDEN CAULFIELD
-                                </h2>
-                                <p className='text-gray-500'>Senior Product Designer</p>
-                            </div>
-
-                            <div className='h-full text-center px-0 sm:px-4'>
-                                <Image
-                                    width={80}
-                                    height={80}
-                                    alt='testimonial'
-                                    className='w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100'
-                                    src={BannerFeminino}
-                                />
-                                <p className='leading-relaxed text-sm'>
-                                    Edison bulb retro cloud bread echo park, helvetica stumptown
-                                    taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                                    ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                                    adaptogen squid fanny pack vaporware.
-                                </p>
-                                <span className='inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4'></span>
-                                <h2 className='text-gray-900 font-medium title-font tracking-wider text-sm'>
-                                    HOLDEN CAULFIELD
-                                </h2>
-                                <p className='text-gray-500'>Senior Product Designer</p>
-                            </div>
-
-                            <div className='h-full text-center px-0 sm:px-4'>
-                                <Image
-                                    width={80}
-                                    height={80}
-                                    alt='testimonial'
-                                    className='w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100'
-                                    src={BannerFeminino}
-                                />
-                                <p className='leading-relaxed text-sm'>
-                                    Edison bulb retro cloud bread echo park, helvetica stumptown
-                                    taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                                    ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                                    adaptogen squid fanny pack vaporware.
-                                </p>
-                                <span className='inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4'></span>
-                                <h2 className='text-gray-900 font-medium title-font tracking-wider text-sm'>
-                                    HOLDEN CAULFIELD
-                                </h2>
-                                <p className='text-gray-500'>Senior Product Designer</p>
-                            </div>
-
-                            <div className='h-full text-center px-0 sm:px-4'>
-                                <Image
-                                    width={80}
-                                    height={80}
-                                    alt='testimonial'
-                                    className='w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100'
-                                    src={BannerFeminino}
-                                />
-                                <p className='leading-relaxed text-sm'>
-                                    Edison bulb retro cloud bread echo park, helvetica stumptown
-                                    taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                                    ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                                    adaptogen squid fanny pack vaporware.
-                                </p>
-                                <span className='inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4'></span>
-                                <h2 className='text-gray-900 font-medium title-font tracking-wider text-sm'>
-                                    HOLDEN CAULFIELD
-                                </h2>
-                                <p className='text-gray-500'>Senior Product Designer</p>
-                            </div>
-
-                            <div className='h-full text-center px-0 sm:px-4'>
-                                <Image
-                                    width={80}
-                                    height={80}
-                                    alt='testimonial'
-                                    className='w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100'
-                                    src={BannerFeminino}
-                                />
-                                <p className='leading-relaxed text-sm'>
-                                    Edison bulb retro cloud bread echo park, helvetica stumptown
-                                    taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                                    ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                                    adaptogen squid fanny pack vaporware.
-                                </p>
-                                <span className='inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4'></span>
-                                <h2 className='text-gray-900 font-medium title-font tracking-wider text-sm'>
-                                    ALPER KAMU
-                                </h2>
-                                <p className='text-gray-500'>UI Develeoper</p>
-                            </div>
-
-                            <div className='h-full text-center px-0 sm:px-4'>
-                                <Image
-                                    width={80}
-                                    height={80}
-                                    alt='testimonial'
-                                    className='w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100'
-                                    src={BannerFeminino}
-                                />
-                                <p className='leading-relaxed text-sm'>
-                                    Edison bulb retro cloud bread echo park, helvetica stumptown
-                                    taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                                    ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                                    adaptogen squid fanny pack vaporware.
-                                </p>
-                                <span className='inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4'></span>
-                                <h2 className='text-gray-900 font-medium title-font tracking-wider text-sm'>
-                                    HENRY LETHAM
-                                </h2>
-                                <p className='text-gray-500'>CTO</p>
-                            </div>
-                            <div className='h-full text-center px-0 sm:px-4'>
-                                <Image
-                                    width={80}
-                                    height={80}
-                                    alt='testimonial'
-                                    className='w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100'
-                                    src={BannerFeminino}
-                                />
-                                <p className='leading-relaxed text-sm'>
-                                    Edison bulb retro cloud bread echo park, helvetica stumptown
-                                    taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                                    ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                                    adaptogen squid fanny pack vaporware.
-                                </p>
-                                <span className='inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4'></span>
-                                <h2 className='text-gray-900 font-medium title-font tracking-wider text-sm'>
-                                    HENRY LETHAM
-                                </h2>
-                                <p className='text-gray-500'>CTO</p>
-                            </div>
-                        </Slider>
+                    <div className='px-5 text-gray-600 body-font mb-20'>
+                        <div className='flex justify-center mb-4'>
+                            <Blockquote text={'Depoimentos dos'} textAction={'Clientes'} />
+                        </div>
+                        <TestimonialClient testimonials={testimonialClient} />
                     </div>
                 </section>
             </Header>
@@ -1035,3 +475,113 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getStaticProps: GetStaticProps = async () => {
+    const resultSlideBanner = await client.query(
+        prismic.Predicates.at('document.type', 'slidebanner')
+    );
+
+    const slideBanner = resultSlideBanner.results.map((data) => ({
+        id: data.id,
+        title: data.data.title,
+        description: data.data.description,
+        url: data.data.image.url,
+    }));
+
+    const resultTestimonials = await client.query(
+        prismic.Predicates.at('document.type', 'depoimentoclientes')
+    );
+
+    const testimonialClient = resultTestimonials.results.map((data) => ({
+        id: data.id,
+        name: data.data.name,
+        testimonial: data.data.testimonial,
+        image: data.data.avatar.url,
+        date: new Date(data.first_publication_date).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+        }),
+    }));
+
+    const resultBannerNews = await client.query(
+        prismic.Predicates.at('document.type', 'bannernovidade')
+    );
+
+    const bannerNews = resultBannerNews.results.reduce(
+        (acumulador, data) => ({
+            ...acumulador,
+            id: data.id,
+            title: data.data.title,
+            description: data.data.description,
+            image: data.data.image.url,
+            link: data.data.link.url,
+        }),
+        {}
+    );
+
+    const resultBannerPromotion = await client.query(
+        prismic.Predicates.at('document.type', 'bannerpromocao')
+    );
+
+    const bannerPromotion = resultBannerPromotion.results.reduce(
+        (acumulador, data) => ({
+            ...acumulador,
+            id: data.id,
+            title: data.data.title,
+            price: data.data.price,
+            image: data.data.image.url,
+            link: data.data.link.url,
+        }),
+        {}
+    );
+
+    const resultFeminine = await client.query(prismic.Predicates.at('document.type', 'feminino'), {
+        orderings: ['document.last_publication_date desc'],
+        pageSize: 10,
+    });
+
+    const feminine = ProductsMapper(resultFeminine);
+
+    const resultMasculine = await client.query(
+        prismic.Predicates.at('document.type', 'masculino'),
+        {
+            orderings: ['document.last_publication_date desc'],
+            pageSize: 10,
+        }
+    );
+
+    const masculine = ProductsMapper(resultMasculine);
+
+    const resultTupperware = await client.query(
+        prismic.Predicates.at('document.type', 'tupperware'),
+        {
+            orderings: ['document.last_publication_date desc'],
+            pageSize: 10,
+        }
+    );
+
+    const tupperware = ProductsMapper(resultTupperware);
+
+    const resultOthers = await client.query(prismic.Predicates.at('document.type', 'others'), {
+        orderings: ['document.last_publication_date desc'],
+        pageSize: 10,
+    });
+
+    const others = ProductsMapper(resultOthers);
+
+    return {
+        props: {
+            slideBanner,
+            testimonialClient,
+            bannerPromotion,
+            bannerNews,
+            feminine,
+            masculine,
+            resultFeminine,
+            tupperware,
+            others,
+        },
+        revalidate: 60 * 30, // A cada 30min
+    };
+};
