@@ -193,8 +193,11 @@ const Home: NextPage<Props> = ({
                     <Slider {...settingsProduct} className='sm:hidden'>
                         {feminine &&
                             feminine.map((productFeminine) => (
-                                <Link href={`/feminino/${productFeminine.slug}`}>
-                                    <div className='p-2' key={productFeminine.id}>
+                                <Link
+                                    href={`/feminino/${productFeminine.slug}`}
+                                    key={productFeminine.id}
+                                >
+                                    <div className='p-2'>
                                         <Image
                                             className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
                                             src={productFeminine.image[0].image1.url}
@@ -218,8 +221,11 @@ const Home: NextPage<Props> = ({
                     <div className='hidden sm:grid gap-4 sm:gap-6 grid-cols-3 md:grid-cols-4 italic lg:grid-cols-5 my-6 mx-4 sm:mx-0'>
                         {feminine &&
                             feminine.map((productFeminine) => (
-                                <Link href={`/feminino/${productFeminine.slug}`}>
-                                    <div className='mb-6' key={productFeminine.id}>
+                                <Link
+                                    href={`/feminino/${productFeminine.slug}`}
+                                    key={productFeminine.id}
+                                >
+                                    <div className='mb-6'>
                                         <Image
                                             className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
                                             src={productFeminine.image[0].image1.url}
