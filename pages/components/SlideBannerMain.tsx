@@ -31,10 +31,10 @@ const SlideBannerMain = ({ slide }: Props) => {
                     <div key={slide.id} className='relative'>
                         <div className=' flex justify-center items-center '>
                             <div className='absolute z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3 font-semibold rounded '>
-                                <h4 className='uppercase text-gray-500 text-[10px] sm:text-sm'>
+                                <h4 className='uppercase text-gray-500 text-xs sm:text-sm'>
                                     {slide.title}
                                 </h4>
-                                <p className='uppercase text-xs sm:text-lg'>{slide.description}</p>
+                                <p className='uppercase text-sm sm:text-lg'>{slide.description}</p>
                             </div>
                             <Image
                                 src={slide.url}
