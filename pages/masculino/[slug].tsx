@@ -27,7 +27,7 @@ type Props = {
     product: Product;
 };
 
-const Feminino = ({ product }: Props) => {
+const Masculine = ({ product }: Props) => {
     const settings = {
         infinite: true,
         slidesToShow: 5,
@@ -69,7 +69,7 @@ const Feminino = ({ product }: Props) => {
         <Header>
             <BuyProduct product={product} />
 
-            <div className='divide-y my-10 sm:my-20'>
+            <div className='divide-y mt-4 mb-10 sm:my-20'>
                 <div>{''}</div>
                 <div>{''}</div>
             </div>
@@ -198,13 +198,13 @@ const Feminino = ({ product }: Props) => {
     );
 };
 
-export default Feminino;
+export default Masculine;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const { slug }: any = params;
 
     try {
-        const resultProduct = await client.getByUID('feminino', String(slug), {});
+        const resultProduct = await client.getByUID('masculino', String(slug), {});
 
         const product = {
             id: resultProduct.id,
@@ -217,7 +217,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
                 { size: 'M', active: resultProduct.data['size-m'] },
                 { size: 'G', active: resultProduct.data['size-g'] },
             ],
-            routeCategory: 'feminino',
+            routeCategory: 'masculino',
         };
 
         return {
