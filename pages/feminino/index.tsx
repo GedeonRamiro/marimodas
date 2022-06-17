@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import BannerFeminino from '../../public/images/banner-feminino.jpg';
 import Head from 'next/head';
 
