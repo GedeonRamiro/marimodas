@@ -258,44 +258,54 @@ const Home: NextPage<Props> = ({
                     <Slider {...settingsProduct} className='sm:hidden'>
                         {masculine &&
                             masculine.map((productMasculine) => (
-                                <div className='p-2' key={productMasculine.id}>
-                                    <Image
-                                        className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                        src={productMasculine.image[0].image1.url}
-                                        width={480}
-                                        height={600}
-                                        objectFit='cover'
-                                        alt={productMasculine.name}
-                                    />
-                                    <h4 className='text-gray-500 text-sm mt-2'>
-                                        {productMasculine.name}
-                                    </h4>
-                                    <p className='text-gray-800 font-bold'>
-                                        {formatCurrent(productMasculine.price)}
-                                    </p>
-                                </div>
+                                <Link
+                                    href={`/masculino/${productMasculine.slug}`}
+                                    key={productMasculine.id}
+                                >
+                                    <div className='p-2' key={productMasculine.id}>
+                                        <Image
+                                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                            src={productMasculine.image[0].image1.url}
+                                            width={480}
+                                            height={600}
+                                            objectFit='cover'
+                                            alt={productMasculine.name}
+                                        />
+                                        <h4 className='text-gray-500 text-sm mt-2'>
+                                            {productMasculine.name}
+                                        </h4>
+                                        <p className='text-gray-800 font-bold'>
+                                            {formatCurrent(productMasculine.price)}
+                                        </p>
+                                    </div>
+                                </Link>
                             ))}
                     </Slider>
 
                     <div className='hidden sm:grid gap-4 sm:gap-6 grid-cols-3 md:grid-cols-4 italic lg:grid-cols-5 my-6 mx-4 sm:mx-0'>
                         {masculine &&
                             masculine.map((productMasculine) => (
-                                <div className='mb-6' key={productMasculine.id}>
-                                    <Image
-                                        className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
-                                        src={productMasculine.image[0].image1.url}
-                                        width={480}
-                                        height={600}
-                                        objectFit='cover'
-                                        alt={productMasculine.name}
-                                    />
-                                    <h4 className='text-gray-500 text-sm mt-2'>
-                                        {productMasculine.name}
-                                    </h4>
-                                    <p className='text-gray-800 font-bold'>
-                                        {formatCurrent(productMasculine.price)}
-                                    </p>
-                                </div>
+                                <Link
+                                    href={`/masculino/${productMasculine.slug}`}
+                                    key={productMasculine.id}
+                                >
+                                    <div className='mb-6' key={productMasculine.id}>
+                                        <Image
+                                            className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
+                                            src={productMasculine.image[0].image1.url}
+                                            width={480}
+                                            height={600}
+                                            objectFit='cover'
+                                            alt={productMasculine.name}
+                                        />
+                                        <h4 className='text-gray-500 text-sm mt-2'>
+                                            {productMasculine.name}
+                                        </h4>
+                                        <p className='text-gray-800 font-bold'>
+                                            {formatCurrent(productMasculine.price)}
+                                        </p>
+                                    </div>
+                                </Link>
                             ))}
                     </div>
                     <Link href='/masculino'>
@@ -421,10 +431,10 @@ const Home: NextPage<Props> = ({
                             <div className='relative cursor-pointer'>
                                 <div className='flex justify-center items-center '>
                                     <div className='absolute text-center z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3  font-semibold rounded '>
-                                        <h4 className='uppercase text-gray-500 text-[10px] sm:text-[12px]'>
+                                        <h4 className='uppercase text-gray-500 text-xs sm:text-[12px]'>
                                             {bannerNews.title}
                                         </h4>
-                                        <p className='uppercase text-xs sm:text-base'>
+                                        <p className='uppercase text-sm sm:text-base'>
                                             {bannerNews.description}
                                         </p>
                                     </div>
@@ -446,7 +456,7 @@ const Home: NextPage<Props> = ({
                                         <h4 className='uppercase text-gray-500 text-[10px] sm:text-[12px]'>
                                             {bannerPromotion.title}
                                         </h4>
-                                        <p className='uppercase text-xs sm:text-base'>
+                                        <p className='uppercase text-sm sm:text-base'>
                                             por apenas{' '}
                                             <span className='text-red-500'>
                                                 R$ {bannerPromotion.price}
