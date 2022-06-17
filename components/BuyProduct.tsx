@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import { FaMoneyCheck } from 'react-icons/fa';
 import { GiHanger } from 'react-icons/gi';
-import formatCurrent from '../../utils/formatCurrent';
+import formatCurrent from '../utils/formatCurrent';
 
 type Product = {
     id: string;
