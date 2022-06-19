@@ -13,7 +13,7 @@ type Product = {
     name: string;
     description: string;
     price: number;
-    pieceSize: [{ size: string; active: boolean }] | undefined;
+    pieceSize: [{ size: string; active: boolean }];
     routeCategory: string;
 };
 
@@ -35,7 +35,7 @@ const BuyProduct = ({ product }: Props) => {
 
     console.log(product.pieceSize);
 
-    const productUnavailable = product.pieceSize.every((size) => size.active === false);
+    const productUnavailable = product?.pieceSize.every((size) => size.active === false);
 
     return (
         <>
