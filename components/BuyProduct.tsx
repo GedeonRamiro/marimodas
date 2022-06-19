@@ -33,8 +33,6 @@ const BuyProduct = ({ product }: Props) => {
         setSizeProduct(size);
     };
 
-    console.log(product.pieceSize);
-
     const productUnavailable = product?.pieceSize.every((size) => size.active === false);
 
     return (
