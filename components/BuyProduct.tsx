@@ -106,7 +106,7 @@ const BuyProduct = ({ product }: Props) => {
                         </h4>
                         <p className='text-xs sm:text-[13px] lg:text-sm'>{product.description}</p>
                     </div>
-
+                    {/* 'ring-yellow-400 ring-offset-2 ring-2 bg-yellow-300 font-semibold' */}
                     <div className='my-4'>
                         {productUnavailable ? (
                             <p className='mt-4 text-sm text-red-600'>Produto indisponível</p>
@@ -122,7 +122,7 @@ const BuyProduct = ({ product }: Props) => {
                                                     key={index}
                                                     className={`${
                                                         sizeProduct === size.size
-                                                            ? 'ring-yellow-400 ring-offset-2 ring-2 bg-yellow-300 font-semibold'
+                                                            ? 'bg-red-500 font-semibold'
                                                             : ''
                                                     }  bg-gray-100 mr-2 h-8 w-8 sm:w-9 sm:h-9 flex justify-center rounded items-center`}
                                                 >
