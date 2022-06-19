@@ -124,7 +124,7 @@ const BuyProduct = ({ product }: Props) => {
                                                     key={index}
                                                     className={`${
                                                         sizeProduct === size.size
-                                                            ? 'ring-yellow-400 ring-offset-2 ring-2 bg-yellow-400 font-semibold'
+                                                            ? 'ring-yellow-400 ring-offset-2 ring-2 bg-yellow-300 font-semibold'
                                                             : ''
                                                     }  bg-gray-100 mr-2 h-8 w-8 sm:w-9 sm:h-9 flex justify-center rounded items-center`}
                                                 >
