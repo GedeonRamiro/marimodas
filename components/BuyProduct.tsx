@@ -25,6 +25,8 @@ const BuyProduct = ({ product }: Props) => {
     const [productPhoto, setProductPhoto] = useState(0);
     const [sizeProduct, setSizeProduct] = useState('');
 
+    const productSizeActive = product?.pieceSize.map((size) => size.size).join('');
+
     const productPhotoActive = (photoActive: number) => {
         setProductPhoto(photoActive);
     };
@@ -34,6 +36,20 @@ const BuyProduct = ({ product }: Props) => {
     };
 
     const productUnavailable = product?.pieceSize.every((size) => size.active === false);
+
+    const productSingle = product.pieceSize.map((size) => size.size === 'single').join('');
+
+    console.log(sizeProduct);
+
+    const openWhatsapp = (product: Product) => {
+        const url = window.location.href;
+        window.open(`https://api.whatsapp.com/send?phone=${+5586988493093}
+                    &text='Olá, fiquei interessado no produto: 
+                    ${product.name} - 
+                    ${formatCurrent(Number(product.price))} - 
+                    ${sizeProduct && `Tamanho:- ${sizeProduct}`}
+                    ${url} '`);
+    };
 
     return (
         <>
@@ -113,37 +129,50 @@ const BuyProduct = ({ product }: Props) => {
                         ) : (
                             product.pieceSize && (
                                 <>
-                                    <h2 className='my-2 pt-2 font-semibold'>Tamanhos</h2>
-                                    <div className='flex'>
-                                        {product.pieceSize.map((size, index) =>
-                                            size.active === true ? (
-                                                <button
-                                                    onClick={() => buttonActive(size.size)}
-                                                    key={index}
-                                                    className={`${
-                                                        sizeProduct === size.size
-                                                            ? 'ring-yellow-400 ring-offset-2 ring-2 bg-yellow-300 font-semibold mr-2 h-8 w-8 sm:w-9 sm:h-9 flex justify-center rounded items-center'
-                                                            : 'bg-gray-100 mr-2 h-8 w-8 sm:w-9 sm:h-9 flex justify-center rounded items-center'
-                                                    }  `}
-                                                >
-                                                    {size.size}
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    key={index}
-                                                    disabled
-                                                    className='p-2 cursor-not-allowed mr-2 line-through bg-gray-100 text-red-300 h-8 w-8 sm:w-9 sm:h-9 flex justify-center rounded items-center'
-                                                >
-                                                    {size.size}
-                                                </button>
-                                            )
-                                        )}
-                                    </div>
+                                    {productSingle === 'true' ? (
+                                        ''
+                                    ) : (
+                                        <>
+                                            <h2 className='my-2 pt-2 font-semibold'>Tamanhos</h2>
+                                            <div className='flex'>
+                                                {product.pieceSize.map((size, index) =>
+                                                    size.active === true ? (
+                                                        <button
+                                                            onClick={() => buttonActive(size.size)}
+                                                            key={index}
+                                                            className={`${
+                                                                sizeProduct === size.size
+                                                                    ? 'ring-yellow-400 ring-offset-2 ring-2 bg-yellow-300 font-semibold mr-2 h-8 w-8 sm:w-9 sm:h-9 flex justify-center rounded items-center'
+                                                                    : 'bg-gray-100 mr-2 h-8 w-8 sm:w-9 sm:h-9 flex justify-center rounded items-center'
+                                                            }  `}
+                                                        >
+                                                            {size.size}
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            key={index}
+                                                            disabled
+                                                            className='p-2 cursor-not-allowed mr-2 line-through bg-gray-100 text-red-300 h-8 w-8 sm:w-9 sm:h-9 flex justify-center rounded items-center'
+                                                        >
+                                                            {size.size}
+                                                        </button>
+                                                    )
+                                                )}
+                                            </div>
+                                        </>
+                                    )}
                                 </>
                             )
                         )}
 
-                        <button className='mt-4 mb-2 text-sm px-6 py-2 font-light bg-black text-white'>
+                        <button
+                            onClick={() => openWhatsapp(product)}
+                            className={`mt-4 mb-2 text-sm px-6 py-2 font-light bg-black text-white ${
+                                sizeProduct || productSizeActive === 'single' || productUnavailable
+                                    ? ''
+                                    : 'btn-disabled opacity-50'
+                            }`}
+                        >
                             {productUnavailable ? 'Avise-me quando chegar' : 'Fazer pedido'}
                         </button>
                     </div>
