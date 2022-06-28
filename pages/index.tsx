@@ -322,44 +322,54 @@ const Home: NextPage<Props> = ({
                     <Slider {...settingsProduct} className='sm:hidden'>
                         {others &&
                             others.map((productOthers) => (
-                                <div className='p-2' key={productOthers.id}>
-                                    <Image
-                                        className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                        src={productOthers.image[0].image1.url}
-                                        width={480}
-                                        height={600}
-                                        objectFit='cover'
-                                        alt={productOthers.name}
-                                    />
-                                    <h4 className='text-gray-500 text-sm mt-2'>
-                                        {productOthers.name}
-                                    </h4>
-                                    <p className='text-gray-800 font-bold'>
-                                        {formatCurrent(productOthers.price)}
-                                    </p>
-                                </div>
+                                <Link
+                                    href={`/outrosprodutos/${productOthers.slug}`}
+                                    key={productOthers.id}
+                                >
+                                    <div className='p-2'>
+                                        <Image
+                                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                            src={productOthers.image[0].image1.url}
+                                            width={480}
+                                            height={600}
+                                            objectFit='cover'
+                                            alt={productOthers.name}
+                                        />
+                                        <h4 className='text-gray-500 text-sm mt-2'>
+                                            {productOthers.name}
+                                        </h4>
+                                        <p className='text-gray-800 font-bold'>
+                                            {formatCurrent(productOthers.price)}
+                                        </p>
+                                    </div>
+                                </Link>
                             ))}
                     </Slider>
 
                     <div className='hidden sm:grid gap-4 sm:gap-6 grid-cols-3 md:grid-cols-4 italic lg:grid-cols-5 my-6 mx-4 sm:mx-0'>
                         {others &&
                             others.map((productOthers) => (
-                                <div className='mb-6' key={productOthers.id}>
-                                    <Image
-                                        className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
-                                        src={productOthers.image[0].image1.url}
-                                        width={480}
-                                        height={600}
-                                        objectFit='cover'
-                                        alt={productOthers.name}
-                                    />
-                                    <h4 className='text-gray-500 text-sm mt-2'>
-                                        {productOthers.name}
-                                    </h4>
-                                    <p className='text-gray-800 font-bold'>
-                                        {formatCurrent(productOthers.price)}
-                                    </p>
-                                </div>
+                                <Link
+                                    href={`/outrosprodutos/${productOthers.slug}`}
+                                    key={productOthers.id}
+                                >
+                                    <div className='mb-6'>
+                                        <Image
+                                            className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
+                                            src={productOthers.image[0].image1.url}
+                                            width={480}
+                                            height={600}
+                                            objectFit='cover'
+                                            alt={productOthers.name}
+                                        />
+                                        <h4 className='text-gray-500 text-sm mt-2'>
+                                            {productOthers.name}
+                                        </h4>
+                                        <p className='text-gray-800 font-bold'>
+                                            {formatCurrent(productOthers.price)}
+                                        </p>
+                                    </div>
+                                </Link>
                             ))}
                     </div>
                     <Link href='/outrosprodutos'>
@@ -376,44 +386,54 @@ const Home: NextPage<Props> = ({
                     <Slider {...settingsProduct} className='sm:hidden'>
                         {tupperware &&
                             tupperware.map((productTupperware) => (
-                                <div className='p-2' key={productTupperware.id}>
-                                    <Image
-                                        className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                                        src={productTupperware.image[0].image1.url}
-                                        width={480}
-                                        height={600}
-                                        objectFit='cover'
-                                        alt={productTupperware.name}
-                                    />
-                                    <h4 className='text-gray-500 text-sm mt-2'>
-                                        {productTupperware.name}
-                                    </h4>
-                                    <p className='text-gray-800 font-bold'>
-                                        {formatCurrent(productTupperware.price)}
-                                    </p>
-                                </div>
+                                <Link
+                                    href={`/tupperware/${productTupperware.slug}`}
+                                    key={productTupperware.id}
+                                >
+                                    <div className='p-2'>
+                                        <Image
+                                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                            src={productTupperware.image[0].image1.url}
+                                            width={480}
+                                            height={600}
+                                            objectFit='cover'
+                                            alt={productTupperware.name}
+                                        />
+                                        <h4 className='text-gray-500 text-sm mt-2'>
+                                            {productTupperware.name}
+                                        </h4>
+                                        <p className='text-gray-800 font-bold'>
+                                            {formatCurrent(productTupperware.price)}
+                                        </p>
+                                    </div>
+                                </Link>
                             ))}
                     </Slider>
 
                     <div className='hidden sm:grid gap-4 sm:gap-6 grid-cols-3 md:grid-cols-4 italic lg:grid-cols-5 my-6 mx-4 sm:mx-0'>
                         {tupperware &&
                             tupperware.map((productTupperware) => (
-                                <div className='mb-6' key={productTupperware.id}>
-                                    <Image
-                                        className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
-                                        src={productTupperware.image[0].image1.url}
-                                        width={480}
-                                        height={600}
-                                        objectFit='cover'
-                                        alt={productTupperware.name}
-                                    />
-                                    <h4 className='text-gray-500 text-sm mt-2'>
-                                        {productTupperware.name}
-                                    </h4>
-                                    <p className='text-gray-800 font-bold'>
-                                        {formatCurrent(productTupperware.price)}
-                                    </p>
-                                </div>
+                                <Link
+                                    href={`/tupperware/${productTupperware.slug}`}
+                                    key={productTupperware.id}
+                                >
+                                    <div className='mb-6'>
+                                        <Image
+                                            className='duration-300 transform hover:scale-110  hover:opacity-70 cursor-pointer'
+                                            src={productTupperware.image[0].image1.url}
+                                            width={480}
+                                            height={600}
+                                            objectFit='cover'
+                                            alt={productTupperware.name}
+                                        />
+                                        <h4 className='text-gray-500 text-sm mt-2'>
+                                            {productTupperware.name}
+                                        </h4>
+                                        <p className='text-gray-800 font-bold'>
+                                            {formatCurrent(productTupperware.price)}
+                                        </p>
+                                    </div>
+                                </Link>
                             ))}
                     </div>
 
