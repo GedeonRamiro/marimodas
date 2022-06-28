@@ -1,15 +1,10 @@
 import Image from 'next/image';
 import Header from '../../components/Header';
 import BannerFeminino from '../../public/images/banner-feminino.jpg';
-import { GiHanger } from 'react-icons/gi';
-import { FaMoneyCheck } from 'react-icons/fa';
-import { AiOutlineFieldTime } from 'react-icons/ai';
 import Slider from 'react-slick';
-import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 import { client } from '../../utils/prismic-configuration';
-import formatCurrent from '../../utils/formatCurrent';
-import { useState } from 'react';
+
 import BuyProduct from '../../components/BuyProduct';
 
 type Product = {
