@@ -3,6 +3,7 @@ export const ProductsMapper = (products: any) => {
         const dataProducts = {
             id: data.id,
             slug: data.uid,
+            date: data.last_publication_date,
             image: data.data.image,
             name: data.data.name,
             description: data.data.description,
