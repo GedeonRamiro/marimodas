@@ -6,8 +6,10 @@ import { client } from '../../utils/prismic-configuration';
 import * as prismic from '@prismicio/client';
 import { useEffect, useState } from 'react';
 import formatCurrent from '../../utils/formatCurrent';
-import { BiLastPage, BiFirstPage } from 'react-icons/bi';
 import Link from 'next/link';
+import { orderProducts } from '../../utils/orderProducts';
+import Pagination from '../../components/Pagination';
+import { ProductsMapper } from '../../utils/mappers';
 
 type Products = {
     id: string;
@@ -18,6 +20,7 @@ type Products = {
     price: number;
     pieceSize: [{ size: string; active: boolean }];
     routeCategory: string;
+    date: string;
 };
 
 type Props = {
@@ -34,41 +37,9 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
     const productsOrderAction = (order: string) => {
         setValueOrder(order);
 
-        const newsProducts = [...products];
+        const resultOrderProducts = orderProducts(order, products) as Products[];
 
-        if (order === 'newsProducts') {
-            setProducts(getProducts);
-        }
-
-        if (order === 'alphabeticalOrder') {
-            const result = newsProducts.sort((x, y) => {
-                let a = x.name.toLocaleLowerCase(),
-                    b = y.name.toLocaleLowerCase();
-
-                return a == b ? 0 : a > b ? 1 : -1;
-            });
-
-            setProducts(result);
-        }
-
-        if (order === 'smallerPrice') {
-            console.log('Menor preco');
-            const result = newsProducts.sort((x, y) => {
-                return x.price - y.price;
-            });
-
-            setProducts(result);
-        }
-
-        if (order === 'largerPrice') {
-            console.log('Maior preco');
-
-            const result = newsProducts.sort((x, y) => {
-                return y.price - x.price;
-            });
-
-            setProducts(result);
-        }
+        setProducts(resultOrderProducts);
     };
 
     const reqProducts = async (pageNumber: number) => {
@@ -76,7 +47,7 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
             prismic.Predicates.at('document.type', 'feminino'),
             {
                 orderings: ['document.last_publication_date desc'],
-                pageSize: 4,
+                pageSize: 2,
                 page: pageNumber,
             }
         );
@@ -89,13 +60,7 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
 
         if (response.results.length === 0) return;
 
-        const products = response.results.map((product) => ({
-            id: product.id,
-            image: product.data.image,
-            name: product.data.name,
-            description: product.data.description,
-            price: product.data.price,
-        }));
+        const products = ProductsMapper(response);
 
         setCurrentPage(pageNumber);
         setProducts(products as Products[]);
@@ -153,53 +118,11 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
                     ))}
                 </div>
 
-                <div className='flex justify-center my-20'>
-                    <div className='flex justify-between sm:mx-0 mx-6 mb-10'>
-                        <div className='container flex justify-center mx-auto'>
-                            <ul className='flex'>
-                                <li>
-                                    <button
-                                        onClick={() => navigatePage(1)}
-                                        className={`${
-                                            currentPage === 1
-                                                ? 'hidden'
-                                                : 'font-semibold text-xs sm:text-base h-7 px-3 sm:h-8 sm:px-4 text-gray-600 bg-white hover:bg-gray-100'
-                                        }`}
-                                    >
-                                        <BiFirstPage size={20} />
-                                    </button>
-                                </li>
-                                {[...new Array(totalPage)].map((value, index) => (
-                                    <li key={index}>
-                                        <button
-                                            disabled={currentPage === index + 1 ? true : false}
-                                            onClick={() => navigatePage(index + 1)}
-                                            className={` ${
-                                                currentPage === index + 1
-                                                    ? ' text-gray-600 bg-yellow-500 shadow-lg cursor-not-allowed'
-                                                    : 'text-gray-600 bg-white hover:bg-gray-100'
-                                            } font-semibold text-xs sm:text-base h-7 px-3 sm:h-8 sm:px-4 `}
-                                        >
-                                            {index + 1}
-                                        </button>
-                                    </li>
-                                ))}
-                                <li>
-                                    <button
-                                        onClick={() => navigatePage(totalPage)}
-                                        className={`${
-                                            currentPage === totalPage
-                                                ? 'hidden'
-                                                : 'font-semibold text-xs sm:text-base h-7 px-3 sm:h-8 sm:px-4 text-gray-600 bg-white hover:bg-gray-100'
-                                        }`}
-                                    >
-                                        <BiLastPage size={20} />
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <Pagination
+                    totalPage={totalPage}
+                    currentPage={currentPage}
+                    navigatePage={navigatePage}
+                />
             </Header>
         </>
     );
@@ -210,13 +133,14 @@ export default Feminine;
 export const getServerSideProps: GetServerSideProps = async () => {
     const resultFeminine = await client.query(prismic.Predicates.at('document.type', 'feminino'), {
         orderings: ['document.last_publication_date desc'],
-        pageSize: 4,
+        pageSize: 2,
         page: 1,
     });
 
     const products = resultFeminine.results.map((product) => ({
         id: product.id,
         slug: product.uid,
+        date: product.last_publication_date,
         image: product.data.image,
         name: product.data.name,
         description: product.data.description,
