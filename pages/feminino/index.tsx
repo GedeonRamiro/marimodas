@@ -47,7 +47,7 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
             prismic.Predicates.at('document.type', 'feminino'),
             {
                 orderings: ['document.last_publication_date desc'],
-                pageSize: 2,
+                pageSize: 1,
                 page: pageNumber,
             }
         );
@@ -56,6 +56,7 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
     };
 
     const navigatePage = async (pageNumber: number) => {
+        document.querySelector('.drawer-content')?.scrollTo({ top: 0, behavior: 'smooth' });
         const response = await reqProducts(pageNumber);
 
         if (response.results.length === 0) return;
@@ -133,19 +134,11 @@ export default Feminine;
 export const getServerSideProps: GetServerSideProps = async () => {
     const resultFeminine = await client.query(prismic.Predicates.at('document.type', 'feminino'), {
         orderings: ['document.last_publication_date desc'],
-        pageSize: 2,
+        pageSize: 1,
         page: 1,
     });
 
-    const products = resultFeminine.results.map((product) => ({
-        id: product.id,
-        slug: product.uid,
-        date: product.last_publication_date,
-        image: product.data.image,
-        name: product.data.name,
-        description: product.data.description,
-        price: product.data.price,
-    }));
+    const products = ProductsMapper(resultFeminine);
 
     return {
         props: {

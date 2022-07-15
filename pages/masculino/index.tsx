@@ -1,9 +1,74 @@
 import Image from 'next/image';
 import Header from '../../components/Header';
-import BannerMasculine from '../../public/images/banner-masculino.jpg';
+import { client } from '../../utils/prismic-configuration';
+import * as prismic from '@prismicio/client';
+import formatCurrent from '../../utils/formatCurrent';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import { orderProducts } from '../../utils/orderProducts';
+import { ProductsMapper } from '../../utils/mappers';
+import Link from 'next/link';
+import Pagination from '../../components/Pagination';
+import { GetServerSideProps } from 'next';
 
-const Masculine = () => {
+type Products = {
+    id: string;
+    slug: string;
+    image: [{ image1: { url: string } }];
+    name: string;
+    description: string;
+    price: number;
+    pieceSize: [{ size: string; active: boolean }];
+    routeCategory: string;
+    date: string;
+};
+
+type Props = {
+    products: Products[];
+    page: number;
+    totalPage: number;
+};
+
+const Masculine = ({ products: getProducts, page, totalPage }: Props) => {
+    const [products, setProducts] = useState(getProducts || []);
+    const [valueOrder, setValueOrder] = useState('');
+    const [currentPage, setCurrentPage] = useState(Number(page));
+
+    const productsOrderAction = (order: string) => {
+        setValueOrder(order);
+
+        const resultOrderProducts = orderProducts(order, products) as Products[];
+
+        setProducts(resultOrderProducts);
+    };
+
+    const reqProducts = async (pageNumber: number) => {
+        const resultFeminine = await client.query(
+            prismic.Predicates.at('document.type', 'masculino'),
+            {
+                orderings: ['document.last_publication_date desc'],
+                pageSize: 1,
+                page: pageNumber,
+            }
+        );
+
+        return resultFeminine;
+    };
+
+    const navigatePage = async (pageNumber: number) => {
+        document.querySelector('.drawer-content')?.scrollTo({ top: 0, behavior: 'smooth' });
+        const response = await reqProducts(pageNumber);
+
+        if (response.results.length === 0) return;
+
+        const products = ProductsMapper(response);
+
+        setCurrentPage(pageNumber);
+        setProducts(products as Products[]);
+    };
+
+    useEffect(() => {}, [valueOrder]);
+
     return (
         <>
             <Head>
@@ -18,153 +83,71 @@ const Masculine = () => {
                 </blockquote>
 
                 <div className='flex justify-end items-center mx-4 sm:mx-0'>
-                    <select className='select select-sm  select-bordered  w-full max-w-[140px]'>
-                        <option disabled selected>
+                    <select
+                        defaultValue=''
+                        onChange={(event) => productsOrderAction(event.target.value)}
+                        className='select select-sm  select-bordered  w-full max-w-[140px]'
+                    >
+                        <option value='' disabled>
                             Ordenar por
                         </option>
-                        <option>Mais Novos</option>
-                        <option>Nome A-Z</option>
-                        <option>Menor Preço</option>
-                        <option>Maior Preço</option>
+                        <option value='newsProducts'>Mais Novos</option>
+                        <option value='alphabeticalOrder'>Nome A-Z</option>
+                        <option value='smallerPrice'>Menor Preço</option>
+                        <option value='largerPrice'>Maior Preço</option>
                     </select>
                 </div>
 
                 <div className='grid gap-4 sm:gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 italic lg:grid-cols-5 my-6 mx-4 sm:mx-0'>
-                    <div className='mb-6'>
-                        <Image
-                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                            src={BannerMasculine}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-2'>
-                            Vestido-Short com detalhes Vestido-Short com detalhes Vestido-Short com
-                            detalhes
-                        </h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div className='mb-6'>
-                        <Image
-                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                            src={BannerMasculine}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-4'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div>
-                        <Image
-                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                            src={BannerMasculine}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-4'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div>
-                        <Image
-                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                            src={BannerMasculine}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-4'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div>
-                        <Image
-                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                            src={BannerMasculine}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-4'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div>
-                        <Image
-                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                            src={BannerMasculine}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-4'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div>
-                        <Image
-                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                            src={BannerMasculine}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-4'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div>
-                        <Image
-                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                            src={BannerMasculine}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-4'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div>
-                        <Image
-                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                            src={BannerMasculine}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-4'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div>
-                        <Image
-                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
-                            src={BannerMasculine}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-4'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
+                    {products.map((product) => (
+                        <Link href={`/masculino/${product.slug}`} key={product.id}>
+                            <div className='mb-6' key={product.id}>
+                                <Image
+                                    className='duration-300 transform hover:scale-110 hover:opacity-70 cursor-pointer'
+                                    src={product.image[0].image1.url}
+                                    width={480}
+                                    height={600}
+                                    objectFit='cover'
+                                    alt={product.name}
+                                />
+                                <h4 className='text-gray-500 text-sm mt-2'>{product.name}</h4>
+                                <p className='text-gray-800 font-bold'>
+                                    {formatCurrent(product.price)}
+                                </p>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
 
-                <div className='flex justify-center my-20'>
-                    <div className='btn-group'>
-                        <button className='btn'>«</button>
-                        <button className='btn'>Page 22</button>
-                        <button className='btn'>»</button>
-                    </div>
-                </div>
+                <Pagination
+                    totalPage={totalPage}
+                    currentPage={currentPage}
+                    navigatePage={navigatePage}
+                />
             </Header>
         </>
     );
 };
 
 export default Masculine;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    const resultMasculine = await client.query(
+        prismic.Predicates.at('document.type', 'masculino'),
+        {
+            orderings: ['document.last_publication_date desc'],
+            pageSize: 1,
+            page: 1,
+        }
+    );
+
+    const products = ProductsMapper(resultMasculine);
+
+    return {
+        props: {
+            products,
+            page: resultMasculine.page,
+            totalPage: resultMasculine.total_pages,
+        },
+    };
+};
