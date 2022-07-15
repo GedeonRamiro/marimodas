@@ -1,16 +1,10 @@
-import Image from 'next/image';
 import Header from '../../components/Header';
-import BannerFeminino from '../../public/images/banner-feminino.jpg';
-import { GiHanger } from 'react-icons/gi';
-import { FaMoneyCheck } from 'react-icons/fa';
-import { AiOutlineFieldTime } from 'react-icons/ai';
-import Slider from 'react-slick';
-import Link from 'next/link';
-import { GetServerSideProps } from 'next';
+import * as prismic from '@prismicio/client';
 import { client } from '../../utils/prismic-configuration';
-import formatCurrent from '../../utils/formatCurrent';
-import { useState } from 'react';
+import { GetServerSideProps } from 'next';
 import BuyProduct from '../../components/BuyProduct';
+import { ProductsMapper } from '../../utils/mappers';
+import SlideRelatedProducts from '../../components/SlideRelatedProducts';
 
 type Product = {
     id: string;
@@ -25,175 +19,36 @@ type Product = {
 
 type Props = {
     product: Product;
+    relatedProductsMasculine: Product[];
 };
 
-const Masculine = ({ product }: Props) => {
-    const settings = {
-        infinite: true,
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        arrows: false,
-        autoplay: true,
-        speed: 5000,
-        autoplaySpeed: 2000,
-
-        pauseOnHover: true,
-
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
-                },
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    initialSlide: 3,
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                },
-            },
-        ],
-    };
-
+const Masculine = ({ product, relatedProductsMasculine }: Props) => {
     return (
         <Header>
             <BuyProduct product={product} />
 
-            <div className='divide-y mt-4 mb-10 sm:my-20'>
-                <div>{''}</div>
-                <div>{''}</div>
-            </div>
-
-            <div className='mb-10 sm:mb-20'>
-                <blockquote className='flex text-lg sm:text-2xl mt-14 mb-4 font-semibold italic text-center text-slate-900 sm:mx-0 mx-4'>
-                    <p className='mr-2'>Produtos</p>
-                    <p className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-yellow-500 relative inline-block'>
-                        <span className='relative text-gray-100'>RELACIONADOS</span>
-                    </p>
-                </blockquote>
-                <Slider {...settings}>
-                    <div className='p-2'>
-                        <Image
-                            src={BannerFeminino}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-2'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
+            {relatedProductsMasculine.length < 5 ? (
+                <div className='mb-0 sm:mb-10'></div>
+            ) : (
+                <>
+                    <div className='divide-y my-10 sm:my-20'>
+                        <div>{''}</div>
+                        <div>{''}</div>
                     </div>
-                    <div className='p-2'>
-                        <Image
-                            src={BannerFeminino}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
+                    <div className='mb-10 sm:mb-20'>
+                        <blockquote className='flex text-lg sm:text-2xl mt-14 mb-4 font-semibold italic text-center text-slate-900 sm:mx-0 mx-4'>
+                            <p className='mr-2'>Produtos</p>
+                            <p className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-yellow-500 relative inline-block'>
+                                <span className='relative text-gray-100'>RELACIONADOS</span>
+                            </p>
+                        </blockquote>
+                        <SlideRelatedProducts
+                            products={relatedProductsMasculine}
+                            routerProduct={product.routeCategory}
                         />
-                        <h4 className='text-gray-500 text-sm mt-2'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
                     </div>
-                    <div className='p-2'>
-                        <Image
-                            src={BannerFeminino}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-2'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div className='p-2'>
-                        <Image
-                            src={BannerFeminino}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-2'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div className='p-2'>
-                        <Image
-                            src={BannerFeminino}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-2'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div className='p-2'>
-                        <Image
-                            src={BannerFeminino}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-2'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div className='p-2'>
-                        <Image
-                            src={BannerFeminino}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-2'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div className='p-2'>
-                        <Image
-                            src={BannerFeminino}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-2'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div className='p-2'>
-                        <Image
-                            src={BannerFeminino}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-2'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                    <div className='p-2'>
-                        <Image
-                            src={BannerFeminino}
-                            width={480}
-                            height={600}
-                            objectFit='cover'
-                            alt='Banner03'
-                        />
-                        <h4 className='text-gray-500 text-sm mt-2'>Vestido-Short com detalhes</h4>
-                        <p className='text-gray-800 font-bold'>R$ 45,50</p>
-                    </div>
-                </Slider>
-            </div>
+                </>
+            )}
         </Header>
     );
 };
@@ -220,9 +75,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             routeCategory: 'masculino',
         };
 
+        const resultProductsMasculine = await client.query(
+            prismic.Predicates.at('document.type', 'masculino')
+        );
+
+        const relatedProductsMasculine = ProductsMapper(resultProductsMasculine);
+
         return {
             props: {
                 product,
+                relatedProductsMasculine,
             },
         };
     } catch (error) {
