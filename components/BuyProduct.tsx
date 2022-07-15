@@ -39,8 +39,6 @@ const BuyProduct = ({ product }: Props) => {
 
     const productSingle = product.pieceSize.map((size) => size.size === 'single').join('');
 
-    console.log(sizeProduct);
-
     const openWhatsapp = (product: Product) => {
         const url = window.location.href;
         window.open(`https://api.whatsapp.com/send?phone=${+5586988493093}
