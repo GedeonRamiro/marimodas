@@ -55,6 +55,7 @@ const Pagination = ({ totalPage, currentPage, navigatePage }: Props) => {
                         <li>
                             <button
                                 onClick={() => navigatePage(totalPage)}
+                                disabled={currentPage === totalPage ? true : false}
                                 className={`${
                                     currentPage === totalPage
                                         ? 'hidden'
