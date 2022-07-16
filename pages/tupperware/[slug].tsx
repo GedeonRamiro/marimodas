@@ -31,7 +31,7 @@ const Tupperware = ({ product, relatedProductsTupperware }: Props) => {
         <Header>
             <BuyProduct product={product} />
 
-            {relatedProductsTupperware.length < 5 ? (
+            {/*  {relatedProductsTupperware.length < 5 ? (
                 <div className='mb-0 sm:mb-10'></div>
             ) : (
                 <>
@@ -52,7 +52,7 @@ const Tupperware = ({ product, relatedProductsTupperware }: Props) => {
                         />
                     </div>
                 </>
-            )}
+            )} */}
         </Header>
     );
 };

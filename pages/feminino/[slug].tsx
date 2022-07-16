@@ -27,7 +27,7 @@ const Feminino = ({ product, relatedProductsFeminine }: Props) => {
         <Header>
             <BuyProduct product={product} />
 
-            {relatedProductsFeminine.length < 5 ? (
+            {/*   {relatedProductsFeminine.length < 5 ? (
                 <div className='mb-0 sm:mb-10'></div>
             ) : (
                 <>
@@ -48,7 +48,7 @@ const Feminino = ({ product, relatedProductsFeminine }: Props) => {
                         />
                     </div>
                 </>
-            )}
+            )} */}
         </Header>
     );
 };

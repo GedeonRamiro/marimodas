@@ -27,7 +27,7 @@ const OtherProducts = ({ product, relatedProductsOthers }: Props) => {
         <Header>
             <BuyProduct product={product} />
 
-            {relatedProductsOthers.length < 5 ? (
+            {/*  {relatedProductsOthers.length < 5 ? (
                 <div className='mb-0 sm:mb-10'></div>
             ) : (
                 <>
@@ -48,7 +48,7 @@ const OtherProducts = ({ product, relatedProductsOthers }: Props) => {
                         />
                     </div>
                 </>
-            )}
+            )} */}
         </Header>
     );
 };

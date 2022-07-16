@@ -63,7 +63,7 @@ const SlideRelatedProducts = ({ products, routerProduct }: Props) => {
 
     return (
         <>
-            <Slider {...settings}>
+            {/*  <Slider {...settings}>
                 {products &&
                     products.map((product) => (
                         <Link href={`/${routerProduct}/${product.slug}`} key={product.id}>
@@ -83,7 +83,7 @@ const SlideRelatedProducts = ({ products, routerProduct }: Props) => {
                             </div>
                         </Link>
                     ))}
-            </Slider>
+            </Slider> */}
         </>
     );
 };
