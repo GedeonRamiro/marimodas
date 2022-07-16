@@ -618,6 +618,6 @@ export const getStaticProps: GetStaticProps = async () => {
             tupperware,
             others,
         },
-        revalidate: 60 * 30, // A cada 30min
+        revalidate: 60 * 30, // A cada 30 min
     };
 };
