@@ -10,21 +10,10 @@ import Link from 'next/link';
 import { orderProducts } from '../../utils/orderProducts';
 import Pagination from '../../components/Pagination';
 import { ProductsMapper } from '../../utils/mappers';
-
-type Products = {
-    id: string;
-    slug: string;
-    image: [{ image1: { url: string } }];
-    name: string;
-    description: string;
-    price: number;
-    pieceSize: [{ size: string; active: boolean }];
-    routeCategory: string;
-    date: string;
-};
+import { Product } from '../../types/types';
 
 type Props = {
-    products: Products[];
+    products: Product[];
     page: number;
     totalPage: number;
 };
@@ -37,7 +26,7 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
     const productsOrderAction = (order: string) => {
         setValueOrder(order);
 
-        const resultOrderProducts = orderProducts(order, products) as Products[];
+        const resultOrderProducts = orderProducts(order, products) as Product[];
 
         setProducts(resultOrderProducts);
     };
@@ -56,7 +45,6 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
     };
 
     const navigatePage = async (pageNumber: number) => {
-        document.querySelector('.drawer-content')?.scrollTo({ top: 0, behavior: 'smooth' });
         const response = await reqProducts(pageNumber);
 
         if (response.results.length === 0) return;
@@ -64,7 +52,7 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
         const products = ProductsMapper(response);
 
         setCurrentPage(pageNumber);
-        setProducts(products as Products[]);
+        setProducts(products as Product[]);
     };
 
     useEffect(() => {}, [valueOrder]);

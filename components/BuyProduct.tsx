@@ -5,17 +5,7 @@ import { AiOutlineFieldTime } from 'react-icons/ai';
 import { FaMoneyCheck } from 'react-icons/fa';
 import { GiHanger } from 'react-icons/gi';
 import formatCurrent from '../utils/formatCurrent';
-
-type Product = {
-    id: string;
-    slug: string;
-    image: [{ image1: { url: string } }];
-    name: string;
-    description: string;
-    price: number;
-    pieceSize: [{ size: string; active: boolean }];
-    routeCategory: string;
-};
+import { Product } from '../types/types';
 
 type Props = {
     product: Product;
@@ -50,7 +40,7 @@ const BuyProduct = ({ product }: Props) => {
     };
 
     return (
-        <>
+        <div className='mb-0 sm:mb-6'>
             <h1 className='bg-gray-50 p-2 sm:p-4 font-semibold text-lg sm:text-xl lg:text-2xl italic text-center mt-5 mb-2 text-gray-700'>
                 {product.name}
             </h1>
@@ -199,7 +189,7 @@ const BuyProduct = ({ product }: Props) => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

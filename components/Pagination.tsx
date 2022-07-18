@@ -1,17 +1,4 @@
-import { useState } from 'react';
 import { BiLastPage, BiFirstPage } from 'react-icons/bi';
-
-type Products = {
-    id: string;
-    slug: string;
-    image: [{ image1: { url: string } }];
-    name: string;
-    description: string;
-    price: number;
-    pieceSize: [{ size: string; active: boolean }];
-    routeCategory: string;
-    date: string;
-};
 
 type Props = {
     totalPage: number;
@@ -20,11 +7,15 @@ type Props = {
 };
 
 const Pagination = ({ totalPage, currentPage, navigatePage }: Props) => {
+    const scrollToProduct = () => {
+        document.querySelector('.drawer-content')?.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
         <div className='flex justify-center my-6 sm:my-20'>
             <div className='flex justify-between sm:mx-0 mx-6 mb-10'>
                 <div className='container flex justify-center mx-auto'>
-                    <ul className='flex'>
+                    <ul className='flex' onClick={scrollToProduct}>
                         <li>
                             <button
                                 onClick={() => navigatePage(1)}
