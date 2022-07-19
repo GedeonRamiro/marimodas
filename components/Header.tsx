@@ -45,7 +45,7 @@ const Header = ({ children }: Props) => {
                         <div className='container flex justify-center'>
                             <div className='flex-1 lg:flex-none px-2 mx-2 cursor-pointer'>
                                 <Link href='/'>
-                                    <Image src={Logo} alt='Logo' width={30} height={30} />
+                                    <Image src={Logo} alt='Logo' width={35} height={35} />
                                 </Link>
                             </div>
                             <nav className='flex-none hidden lg:block'>

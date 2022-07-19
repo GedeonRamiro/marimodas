@@ -61,6 +61,8 @@ const TestimonialClient = ({ testimonials }: Props) => {
                             alt='testimonial'
                             className='w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100'
                             src={testimonial.image}
+                            placeholder='blur'
+                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                         />
                         <p className='leading-relaxed text-sm'>{testimonial.testimonial}</p>
                         <span className='inline-block h-1 w-10 rounded bg-yellow-500 mt-6 mb-4'></span>

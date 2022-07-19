@@ -42,6 +42,8 @@ const SlideBannerMain = ({ slide }: Props) => {
                                 height={500}
                                 objectFit='cover'
                                 alt={slide.title}
+                                placeholder='blur'
+                                blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                             />
                         </div>
                     </div>

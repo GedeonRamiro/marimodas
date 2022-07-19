@@ -121,6 +121,8 @@ const Home: NextPage<Props> = ({
                                             height={250}
                                             objectFit='cover'
                                             alt='BannerFeminino'
+                                            placeholder='blur'
+                                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                         />
                                     </div>
                                 </Link>
@@ -135,6 +137,8 @@ const Home: NextPage<Props> = ({
                                             height={250}
                                             objectFit='cover'
                                             alt='BannerMasculino'
+                                            placeholder='blur'
+                                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                         />
                                     </div>
                                 </Link>
@@ -150,6 +154,8 @@ const Home: NextPage<Props> = ({
                                         height={250}
                                         objectFit='cover'
                                         alt='BannerAcessorios'
+                                        placeholder='blur'
+                                        blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                     />
                                 </div>
                             </Link>
@@ -205,6 +211,8 @@ const Home: NextPage<Props> = ({
                                             height={600}
                                             objectFit='cover'
                                             alt={productFeminine.name}
+                                            placeholder='blur'
+                                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                         />
                                         <h4 className='text-gray-500 text-sm mt-2'>
                                             {productFeminine.name}
@@ -233,6 +241,8 @@ const Home: NextPage<Props> = ({
                                             height={600}
                                             objectFit='cover'
                                             alt={productFeminine.name}
+                                            placeholder='blur'
+                                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                         />
                                         <h4 className='text-gray-500 text-sm mt-2'>
                                             {productFeminine.name}
@@ -270,6 +280,8 @@ const Home: NextPage<Props> = ({
                                             height={600}
                                             objectFit='cover'
                                             alt={productMasculine.name}
+                                            placeholder='blur'
+                                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                         />
                                         <h4 className='text-gray-500 text-sm mt-2'>
                                             {productMasculine.name}
@@ -297,6 +309,8 @@ const Home: NextPage<Props> = ({
                                             height={600}
                                             objectFit='cover'
                                             alt={productMasculine.name}
+                                            placeholder='blur'
+                                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                         />
                                         <h4 className='text-gray-500 text-sm mt-2'>
                                             {productMasculine.name}
@@ -334,6 +348,8 @@ const Home: NextPage<Props> = ({
                                             height={600}
                                             objectFit='cover'
                                             alt={productOthers.name}
+                                            placeholder='blur'
+                                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                         />
                                         <h4 className='text-gray-500 text-sm mt-2'>
                                             {productOthers.name}
@@ -361,6 +377,8 @@ const Home: NextPage<Props> = ({
                                             height={600}
                                             objectFit='cover'
                                             alt={productOthers.name}
+                                            placeholder='blur'
+                                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                         />
                                         <h4 className='text-gray-500 text-sm mt-2'>
                                             {productOthers.name}
@@ -398,6 +416,8 @@ const Home: NextPage<Props> = ({
                                             height={600}
                                             objectFit='cover'
                                             alt={productTupperware.name}
+                                            placeholder='blur'
+                                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                         />
                                         <h4 className='text-gray-500 text-sm mt-2'>
                                             {productTupperware.name}
@@ -425,6 +445,8 @@ const Home: NextPage<Props> = ({
                                             height={600}
                                             objectFit='cover'
                                             alt={productTupperware.name}
+                                            placeholder='blur'
+                                            blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                         />
                                         <h4 className='text-gray-500 text-sm mt-2'>
                                             {productTupperware.name}
@@ -463,14 +485,16 @@ const Home: NextPage<Props> = ({
                                         width={800}
                                         height={400}
                                         objectFit='cover'
-                                        alt='Banner01'
+                                        alt={bannerNews.title}
+                                        placeholder='blur'
+                                        blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                     />
                                 </div>
                             </div>
                         </Link>
 
                         <Link href={bannerPromotion.link}>
-                            <div className='relative cursor-pointer'>
+                            <div className='relative cursor-pointer mt-1 sm:mt-0'>
                                 <div className=' flex justify-center items-center '>
                                     <div className='absolute  text-center z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3  font-semibold rounded '>
                                         <h4 className='uppercase text-gray-500 text-[10px] sm:text-[12px]'>
@@ -488,7 +512,9 @@ const Home: NextPage<Props> = ({
                                         width={800}
                                         height={400}
                                         objectFit='cover'
-                                        alt='Banner01'
+                                        alt={bannerPromotion.title}
+                                        placeholder='blur'
+                                        blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                     />
                                 </div>
                             </div>

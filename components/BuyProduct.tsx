@@ -64,6 +64,8 @@ const BuyProduct = ({ product }: Props) => {
                         height={600}
                         objectFit='cover'
                         alt={product.name}
+                        placeholder='blur'
+                        blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                     />
 
                     <div className='grid grid-cols-6 gap-2'>
@@ -84,6 +86,8 @@ const BuyProduct = ({ product }: Props) => {
                                     height={80}
                                     objectFit='cover'
                                     alt={product.name}
+                                    placeholder='blur'
+                                    blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                 />
                             </div>
                         ))}
