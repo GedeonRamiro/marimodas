@@ -34,7 +34,7 @@ const OtherProducts = ({ products: getProducts, page, totalPage }: Props) => {
     const reqProducts = async (pageNumber: number) => {
         const resultOthers = await client.query(prismic.Predicates.at('document.type', 'others'), {
             orderings: ['document.last_publication_date desc'],
-            pageSize: 1,
+            pageSize: 10,
             page: pageNumber,
         });
 
@@ -93,6 +93,8 @@ const OtherProducts = ({ products: getProducts, page, totalPage }: Props) => {
                                     height={600}
                                     objectFit='cover'
                                     alt={product.name}
+                                    placeholder='blur'
+                                    blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                 />
                                 <h4 className='text-gray-500 text-sm mt-2'>{product.name}</h4>
                                 <p className='text-gray-800 font-bold'>
@@ -118,7 +120,7 @@ export default OtherProducts;
 export const getServerSideProps: GetServerSideProps = async () => {
     const resultOthers = await client.query(prismic.Predicates.at('document.type', 'others'), {
         orderings: ['document.last_publication_date desc'],
-        pageSize: 1,
+        pageSize: 10,
         page: 1,
     });
 

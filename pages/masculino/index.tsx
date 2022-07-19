@@ -36,7 +36,7 @@ const Masculine = ({ products: getProducts, page, totalPage }: Props) => {
             prismic.Predicates.at('document.type', 'masculino'),
             {
                 orderings: ['document.last_publication_date desc'],
-                pageSize: 1,
+                pageSize: 10,
                 page: pageNumber,
             }
         );
@@ -97,6 +97,8 @@ const Masculine = ({ products: getProducts, page, totalPage }: Props) => {
                                     height={600}
                                     objectFit='cover'
                                     alt={product.name}
+                                    placeholder='blur'
+                                    blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                                 />
                                 <h4 className='text-gray-500 text-sm mt-2'>{product.name}</h4>
                                 <p className='text-gray-800 font-bold'>
@@ -124,7 +126,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         prismic.Predicates.at('document.type', 'masculino'),
         {
             orderings: ['document.last_publication_date desc'],
-            pageSize: 1,
+            pageSize: 10,
             page: 1,
         }
     );
