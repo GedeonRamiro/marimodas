@@ -10,7 +10,7 @@ const Footer = () => {
     const menuArray = [
         { href: '/feminino', pathname: '/feminino', name: 'Feminino' },
         { href: '/masculino', pathname: '/masculino', name: 'Masculino' },
-        { href: '/acessorios', pathname: '/acessorios', name: 'Acessórios' },
+        { href: '/outrosprodutos', pathname: '/outrosprodutos', name: 'Outros produtos' },
         { href: '/tupperware', pathname: '/tupperware', name: 'Tupperware' },
     ];
 
