@@ -205,7 +205,7 @@ const Home: NextPage<Props> = ({
                                 >
                                     <div className='p-2'>
                                         <Image
-                                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                            className='duration-300 transform hover:scale-110 hover:opacity-70 cursor-pointer'
                                             src={productFeminine.image[0].image1.url}
                                             width={480}
                                             height={600}
@@ -274,7 +274,7 @@ const Home: NextPage<Props> = ({
                                 >
                                     <div className='p-2' key={productMasculine.id}>
                                         <Image
-                                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                            className='duration-300 transform hover:scale-110 hover:opacity-70 cursor-pointer'
                                             src={productMasculine.image[0].image1.url}
                                             width={480}
                                             height={600}
@@ -342,7 +342,7 @@ const Home: NextPage<Props> = ({
                                 >
                                     <div className='p-2'>
                                         <Image
-                                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                            className='duration-300 transform hover:scale-110 hover:opacity-70 cursor-pointer'
                                             src={productOthers.image[0].image1.url}
                                             width={480}
                                             height={600}
@@ -410,7 +410,7 @@ const Home: NextPage<Props> = ({
                                 >
                                     <div className='p-2'>
                                         <Image
-                                            className='duration-300 transform hover:scale-110 hover:sepia hover:opacity-70 cursor-pointer'
+                                            className='duration-300 transform hover:scale-110 hover:opacity-70 cursor-pointer'
                                             src={productTupperware.image[0].image1.url}
                                             width={480}
                                             height={600}
