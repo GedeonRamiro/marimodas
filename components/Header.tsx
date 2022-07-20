@@ -43,7 +43,7 @@ const Header = ({ children }: Props) => {
                             </label>
                         </div>
                         <div className='container flex justify-center'>
-                            <div className='flex-1 lg:flex-none px-2 mx-2 cursor-pointer'>
+                            <div className='flex-1 lg:flex-none px-0 mx-0 sm:px-2 sm:mx-2 cursor-pointer'>
                                 <Link href='/'>
                                     <Image src={Logo} alt='Logo' width={35} height={35} />
                                 </Link>
