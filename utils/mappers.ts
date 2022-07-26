@@ -22,6 +22,7 @@ export const ProductsMapper = (products: any) => {
             sizeP: data.data['size-p'] ? data.data['size-p'] : '',
             sizeM: data.data['size-m'] ? data.data['size-m'] : '',
             sizeG: data.data['size-g'] ? data.data['size-g'] : '',
+            sizeGG: data.data['size-gg'] ? data.data['size-gg'] : '',
         };
     });
 
