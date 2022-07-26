@@ -255,7 +255,7 @@ const Home: NextPage<Props> = ({
                             ))}
                     </div>
                     <Link href='/feminino'>
-                        <h4 className='cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
+                        <h4 className=' hover:from-gray-300 hover:to-gray-100  cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
                             VER TUDO
                         </h4>
                     </Link>
@@ -323,7 +323,7 @@ const Home: NextPage<Props> = ({
                             ))}
                     </div>
                     <Link href='/masculino'>
-                        <h4 className='cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
+                        <h4 className=' hover:from-gray-300 hover:to-gray-100  cursor-pointer  tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
                             VER TUDO
                         </h4>
                     </Link>
@@ -391,7 +391,7 @@ const Home: NextPage<Props> = ({
                             ))}
                     </div>
                     <Link href='/outrosprodutos'>
-                        <h4 className='cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
+                        <h4 className=' hover:from-gray-300 hover:to-gray-100  cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
                             VER TUDO
                         </h4>
                     </Link>
@@ -459,8 +459,8 @@ const Home: NextPage<Props> = ({
                             ))}
                     </div>
 
-                    <Link href='/feminino'>
-                        <h4 className='cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
+                    <Link href='/tupperware'>
+                        <h4 className=' hover:from-gray-300 hover:to-gray-100  cursor-pointer tracking-wider mt-10 sm:mt-0 p-2 sm:p-4 text-xs sm:text-sm text-center text-gray-500 font-semibold mb-4 sm:mx-0 mx-4 box-decoration-slice bg-gradient-to-r from-gray-100 to-gray-50 px-4'>
                             VER TUDO
                         </h4>
                     </Link>
