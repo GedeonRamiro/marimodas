@@ -34,6 +34,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
                 { size: 'P', active: resultProduct.data['size-p'] },
                 { size: 'M', active: resultProduct.data['size-m'] },
                 { size: 'G', active: resultProduct.data['size-g'] },
+                { size: 'GG', active: resultProduct.data['size-gg'] },
             ],
             routeCategory: 'feminino',
         };
