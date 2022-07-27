@@ -472,7 +472,7 @@ const Home: NextPage<Props> = ({
                         <Link href={bannerNews.link}>
                             <div className='relative cursor-pointer'>
                                 <div className='flex justify-center items-center '>
-                                    <div className='absolute text-center z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3  font-semibold rounded '>
+                                    <div className='absolute text-center z-40 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3  font-semibold rounded '>
                                         <h4 className='uppercase text-gray-500 text-xs sm:text-[12px]'>
                                             {bannerNews.title}
                                         </h4>
@@ -496,7 +496,7 @@ const Home: NextPage<Props> = ({
                         <Link href={bannerPromotion.link}>
                             <div className='relative cursor-pointer mt-1 sm:mt-0'>
                                 <div className=' flex justify-center items-center '>
-                                    <div className='absolute  text-center z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3  font-semibold rounded '>
+                                    <div className='absolute  text-center z-40 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3  font-semibold rounded '>
                                         <h4 className='uppercase text-gray-500 text-[10px] sm:text-[12px]'>
                                             {bannerPromotion.title}
                                         </h4>
