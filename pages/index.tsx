@@ -62,7 +62,7 @@ type TestimonialClient = {
     id: string;
     name: string;
     testimonial: string;
-    image?: string;
+    image: string | null;
     date: string;
 };
 
@@ -523,14 +523,16 @@ const Home: NextPage<Props> = ({
                 </section>
 
                 {/* CARD DEPOIMENTOS */}
-                <section>
-                    <div className='px-5 text-gray-600 body-font mb-20'>
-                        <div className='flex justify-center mb-4'>
-                            <Blockquote text={'Depoimentos dos'} textAction={'Clientes'} />
+                {testimonialClient.length && (
+                    <section>
+                        <div className='px-5 text-gray-600 body-font mb-20'>
+                            <div className='flex justify-center mb-4'>
+                                <Blockquote text={'Depoimentos dos'} textAction={'Clientes'} />
+                            </div>
+                            <TestimonialClient testimonials={testimonialClient} />
                         </div>
-                        <TestimonialClient testimonials={testimonialClient} />
-                    </div>
-                </section>
+                    </section>
+                )}
             </Header>
         </>
     );
@@ -553,8 +555,6 @@ export const getStaticProps: GetStaticProps = async () => {
     const resultTestimonials = await client.query(
         prismic.Predicates.at('document.type', 'depoimentoclientes')
     );
-
-    console.log(resultTestimonials);
 
     const testimonialClient = resultTestimonials.results.map((data) => ({
         id: data.id,
