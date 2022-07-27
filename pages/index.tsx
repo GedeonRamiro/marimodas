@@ -62,7 +62,7 @@ type TestimonialClient = {
     id: string;
     name: string;
     testimonial: string;
-    image: string;
+    image?: string;
     date: string;
 };
 
@@ -554,11 +554,13 @@ export const getStaticProps: GetStaticProps = async () => {
         prismic.Predicates.at('document.type', 'depoimentoclientes')
     );
 
+    console.log(resultTestimonials);
+
     const testimonialClient = resultTestimonials.results.map((data) => ({
         id: data.id,
         name: data.data.name,
         testimonial: data.data.testimonial,
-        image: data.data.avatar.url,
+        image: data.data.avatar.url ? data.data.avatar.url : null,
         date: new Date(data.first_publication_date).toLocaleDateString('pt-BR', {
             day: '2-digit',
             month: 'long',

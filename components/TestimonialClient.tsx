@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import Slider from 'react-slick';
+import personIcon from '../public/images/person-icon.png';
 
 type Testimonial = {
     id: string;
     name: string;
     testimonial: string;
-    image: string;
+    image: string | null;
     date: string;
 };
 
@@ -60,7 +61,7 @@ const TestimonialClient = ({ testimonials }: Props) => {
                             height={80}
                             alt='testimonial'
                             className='w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100'
-                            src={testimonial.image}
+                            src={testimonial.image || personIcon}
                             placeholder='blur'
                             blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
                         />
