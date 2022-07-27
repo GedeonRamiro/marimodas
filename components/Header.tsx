@@ -18,13 +18,13 @@ const Header = ({ children }: Props) => {
     ];
 
     return (
-        <div className='drawer h-screen'>
+        <div className='drawer h-screen '>
             <input id='my-drawer-3' type='checkbox' className='drawer-toggle' />
 
             <div className='drawer-content flex flex-col  justify-between'>
                 <div>
                     {/*  <!-- Navbar --> */}
-                    <div className='w-full navbar bg-base-200'>
+                    <div className='w-full navbar bg-base-200 shadow-md z-50 sticky top-0'>
                         <div className='flex-none lg:hidden'>
                             <label htmlFor='my-drawer-3' className='btn btn-square btn-ghost'>
                                 <svg
