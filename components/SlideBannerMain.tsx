@@ -15,8 +15,6 @@ type Props = {
 };
 
 const SlideBannerMain = ({ slide }: Props) => {
-    console.log('SLIDE:', slide);
-
     const settings = {
         infinite: true,
         speed: 500,
