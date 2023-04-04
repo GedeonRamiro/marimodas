@@ -57,6 +57,7 @@ type SlideBanner = {
     title: string;
     description: string;
     url: string;
+    link: string | null;
 };
 
 type TestimonialClient = {
@@ -548,12 +549,18 @@ export const getStaticProps: GetStaticProps = async () => {
         prismic.Predicates.at('document.type', 'slidebanner')
     );
 
-    const slideBanner = resultSlideBanner.results.map((data) => ({
-        id: data.id,
-        title: data.data.title,
-        description: data.data.description,
-        url: data.data.image.url,
-    }));
+    const slideBanner = resultSlideBanner.results.map(
+        (data) => (
+            console.log('slideBanner:', data),
+            {
+                id: data.id,
+                title: data.data.title,
+                description: data.data.description,
+                url: data.data.image.url,
+                link: data.data.link.url ? data.data.link.url : null,
+            }
+        )
+    );
 
     const resultTestimonials = await client.query(
         prismic.Predicates.at('document.type', 'depoimentoclientes')

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Slider from 'react-slick';
 
 type SlideBanner = {
@@ -6,6 +7,7 @@ type SlideBanner = {
     title: string;
     description: string;
     url: string;
+    link: string | null;
 };
 
 type Props = {
@@ -13,6 +15,8 @@ type Props = {
 };
 
 const SlideBannerMain = ({ slide }: Props) => {
+    console.log('SLIDE:', slide);
+
     const settings = {
         infinite: true,
         speed: 500,
@@ -29,23 +33,27 @@ const SlideBannerMain = ({ slide }: Props) => {
             {slide &&
                 slide.map((slide) => (
                     <div key={slide.id} className='relative'>
-                        <div className=' flex justify-center items-center '>
-                            <div className='absolute z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3 font-semibold rounded '>
-                                <h4 className='uppercase text-gray-500 text-xs sm:text-sm'>
-                                    {slide.title}
-                                </h4>
-                                <p className='uppercase text-sm sm:text-lg'>{slide.description}</p>
+                        <Link href={slide.link ? slide.link : ''}>
+                            <div className=' flex justify-center items-center '>
+                                <div className='absolute z-50 bg-white px-4 sm:px-6 tracking-wider py-2 sm:py-3 font-semibold rounded '>
+                                    <h4 className='uppercase text-gray-500 text-xs sm:text-sm'>
+                                        {slide.title}
+                                    </h4>
+                                    <p className='uppercase text-sm sm:text-lg'>
+                                        {slide.description}
+                                    </p>
+                                </div>
+                                <Image
+                                    src={slide.url}
+                                    width={800}
+                                    height={500}
+                                    objectFit='cover'
+                                    alt={slide.title}
+                                    placeholder='blur'
+                                    blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
+                                />
                             </div>
-                            <Image
-                                src={slide.url}
-                                width={800}
-                                height={500}
-                                objectFit='cover'
-                                alt={slide.title}
-                                placeholder='blur'
-                                blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8tZmjHgAGWgIm6BA6ZAAAAABJRU5ErkJggg=='
-                            />
-                        </div>
+                        </Link>
                     </div>
                 ))}
         </Slider>
