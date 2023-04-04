@@ -11,12 +11,15 @@ import Pagination from '../../components/Pagination';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 import { Product } from '../../types/types';
+import { routerEventsNProgress } from '../../utils/routerEventsNprogress';
 
 type Props = {
     products: Product[];
     page: number;
     totalPage: number;
 };
+
+routerEventsNProgress();
 
 const Tupperware = ({ products: getProducts, page, totalPage }: Props) => {
     const [products, setProducts] = useState(getProducts || []);

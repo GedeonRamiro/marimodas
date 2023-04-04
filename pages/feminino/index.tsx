@@ -11,12 +11,15 @@ import { orderProducts } from '../../utils/orderProducts';
 import Pagination from '../../components/Pagination';
 import { ProductsMapper } from '../../utils/mappers';
 import { Product } from '../../types/types';
+import { routerEventsNProgress } from '../../utils/routerEventsNprogress';
 
 type Props = {
     products: Product[];
     page: number;
     totalPage: number;
 };
+
+routerEventsNProgress();
 
 const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
     const [products, setProducts] = useState(getProducts || []);
@@ -60,6 +63,7 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
     return (
         <>
             <Head>
+                <link rel='stylesheet' type='text/css' href='/nprogress.css' />
                 <title>Feminino - Marimodas</title>
             </Head>
             <Header>

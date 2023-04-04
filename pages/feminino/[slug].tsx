@@ -3,16 +3,27 @@ import { client } from '../../utils/prismic-configuration';
 import { GetServerSideProps } from 'next';
 import BuyProduct from '../../components/BuyProduct';
 import { Product } from '../../types/types';
+import { Router } from 'next/router';
+import NProgress from 'nprogress';
+import Head from 'next/head';
+import { routerEventsNProgress } from '../../utils/routerEventsNprogress';
 
 type Props = {
     product: Product;
 };
 
+routerEventsNProgress();
+
 const Feminino = ({ product }: Props) => {
     return (
-        <Header>
-            <BuyProduct product={product} />
-        </Header>
+        <>
+            <Head>
+                <title>Feminino - Marimodas</title>
+            </Head>
+            <Header>
+                <BuyProduct product={product} />
+            </Header>
+        </>
     );
 };
 

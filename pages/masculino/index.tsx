@@ -11,12 +11,15 @@ import Link from 'next/link';
 import Pagination from '../../components/Pagination';
 import { GetServerSideProps } from 'next';
 import { Product } from '../../types/types';
+import { routerEventsNProgress } from '../../utils/routerEventsNprogress';
 
 type Props = {
     products: Product[];
     page: number;
     totalPage: number;
 };
+
+routerEventsNProgress();
 
 const Masculine = ({ products: getProducts, page, totalPage }: Props) => {
     const [products, setProducts] = useState(getProducts || []);

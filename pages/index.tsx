@@ -16,6 +16,7 @@ import Blockquote from '../components/Blockquote';
 import Link from 'next/link';
 import { ProductsMapper } from '../utils/mappers';
 import formatCurrent from '../utils/formatCurrent';
+import { routerEventsNProgress } from '../utils/routerEventsNprogress';
 
 interface BannerEmphasis {
     id: string;
@@ -76,6 +77,8 @@ type Props = {
     tupperware: ProductsSizeSingle[];
     others: ProductsSizeSingle[];
 };
+
+routerEventsNProgress();
 
 const Home: NextPage<Props> = ({
     slideBanner,

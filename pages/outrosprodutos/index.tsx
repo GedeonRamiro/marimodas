@@ -11,12 +11,15 @@ import { orderProducts } from '../../utils/orderProducts';
 import Pagination from '../../components/Pagination';
 import { ProductsMapper } from '../../utils/mappers';
 import { Product } from '../../types/types';
+import { routerEventsNProgress } from '../../utils/routerEventsNprogress';
 
 type Props = {
     products: Product[];
     page: number;
     totalPage: number;
 };
+
+routerEventsNProgress();
 
 const OtherProducts = ({ products: getProducts, page, totalPage }: Props) => {
     const [products, setProducts] = useState(getProducts || []);
