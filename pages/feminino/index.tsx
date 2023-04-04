@@ -63,7 +63,6 @@ const Feminine = ({ products: getProducts, page, totalPage }: Props) => {
     return (
         <>
             <Head>
-                <link rel='stylesheet' type='text/css' href='/nprogress.css' />
                 <title>Feminino - Marimodas</title>
             </Head>
             <Header>
