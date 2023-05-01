@@ -111,12 +111,17 @@ const Tupperware = ({ products: getProducts, page, totalPage }: Props) => {
                         </Link>
                     ))}
                 </div>
-
-                <Pagination
-                    totalPage={totalPage}
-                    currentPage={currentPage}
-                    navigatePage={navigatePage}
-                />
+                {products.length ? (
+                    <Pagination
+                        totalPage={totalPage}
+                        currentPage={currentPage}
+                        navigatePage={navigatePage}
+                    />
+                ) : (
+                    <p className='mb-10 text-center text-sm sm:text-base'>
+                        Nenhum produto cadastrador
+                    </p>
+                )}
             </Header>
         </>
     );
